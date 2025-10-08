@@ -3,6 +3,7 @@ package name.turingcomplete.blocks.block;
 import name.turingcomplete.blocks.AbstractLogicBlock;
 import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.*;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
@@ -11,11 +12,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
+public class FourWayRedstoneBridgeBlock extends AbstractLogicBlock {
     private static final IntProperty POWER_Z;
     private static final IntProperty POWER_X;
 
@@ -23,7 +23,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
     private boolean wiresGivePower = true;
 
-    public OmniDirectionalRedstoneBridgeBlock(Settings settings) {
+    public FourWayRedstoneBridgeBlock(Settings settings) {
         super(settings);
         setDefaultState(getDefaultState()
                 .with(POWER_X, 0)
@@ -35,8 +35,12 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
         super.appendProperties(builder);
         builder.add(POWER_X,POWER_Z);
     }
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {
-        return Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
+
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        return super.getPlacementState(ctx)
+            .with(POWER_X, this.getReceivedPowerOnAxis(ctx.getWorld(), ctx.getBlockPos(), Direction.Axis.X))
+            .with(POWER_Z, this.getReceivedPowerOnAxis(ctx.getWorld(), ctx.getBlockPos(), Direction.Axis.Z));
     }
 
     protected void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
@@ -130,13 +134,11 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     // On Neighbor Update
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
         if (world.isClient) return;
 
         if (state.canPlaceAt(world, pos)) {
             this.update(world, pos, state);
-        } else {
-            dropStacks(state, world, pos);
-            world.removeBlock(pos, false);
         }
     }
 
@@ -146,6 +148,10 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     protected boolean emitsRedstonePower(BlockState state) {
         return this.wiresGivePower;
     }
+    @Override
+    protected boolean isDirectional() {return false;}
+    @Override
+    public Boolean dustConnectsToThis(BlockState state, Direction di) {return true;}
 
     // returns the power received on a certain axis
     private int getReceivedPowerOnAxis(World world, BlockPos pos, Direction.Axis axis){
@@ -177,21 +183,61 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     }
 
     private int getReceivedRedstonePower(World world, BlockPos pos, Direction.Axis axis) {
-        int i = 0;
+        int power = 0;
+
+        // set directions for queried axis
         Direction[] directions = new Direction[]{};
         if (axis == Direction.Axis.X) directions = new Direction[]{Direction.EAST, Direction.WEST};
         if (axis == Direction.Axis.Z) directions = new Direction[]{Direction.NORTH, Direction.SOUTH};
 
+        // loop through queried directions
         for (Direction direction : directions) {
-            int j = world.getEmittedRedstonePower(pos.offset(direction), direction);
-            if (world.getBlockState(pos.offset(direction)).isOf(Blocks.REDSTONE_WIRE))
-                j = j-1;
+            // get power source position
+            BlockPos blockPos = pos.offset(direction);
 
-            if (j >= 15) return 15;
-            if (j > i) i = j;
+            // get power emitted from block at direction
+            int emitted_power = this.getEmittedStrongPower(world,blockPos, direction);
+
+            // if power is already at max, return early
+            if (emitted_power >= 15) return 15;
+
+            // else, check if it is bigger then the other power sources
+            else if (emitted_power > power) power = emitted_power;
         }
 
-        return i;
+        // return biggest power source
+        return power;
+    }
+
+    private int getEmittedStrongPower(World world, BlockPos pos, Direction direction){
+        // get source block
+        BlockState source = world.getBlockState(pos);
+
+        // if the block is solid, check surrounding blocks for strong powering
+        if (source.isSolidBlock(world,pos)){
+            int power = 0;
+            for(Direction sourceNeighbourDirection : DIRECTIONS){
+                BlockPos sourceNeighbourPosition = pos.offset(sourceNeighbourDirection);
+                BlockState sourceNeighbour = world.getBlockState(sourceNeighbourPosition);
+
+                // if block is a redstone wire, ignore it
+                if(sourceNeighbour.isOf(Blocks.REDSTONE_WIRE)) continue;
+
+                // else check if the received power is bigger than the current biggest
+                int neighbourPower = sourceNeighbour.getStrongRedstonePower(world,sourceNeighbourPosition,sourceNeighbourDirection);
+                if(neighbourPower > power) power = neighbourPower;
+            }
+
+            // return biggest power from nearby source
+            return power;
+
+        } // else:
+
+        // if blocks is a redstone wire, return it's power with a falloff
+        if (source.isOf(Blocks.REDSTONE_WIRE)) return source.getWeakRedstonePower(world,pos,direction) -1;
+
+        // else get weak power emitted from the block
+        return source.getWeakRedstonePower(world,pos,direction);
     }
 
     private int increasePower(BlockState state, Direction.Axis axis) {
@@ -241,16 +287,6 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
         // Returns Zero By Default
         return 0;
-    }
-
-    @Override
-    public Boolean dustConnectsToThis(BlockState state, Direction di) {
-        return true;
-    }
-
-    @Override
-    public boolean isDirectional(){
-        return false;
     }
 
     static {

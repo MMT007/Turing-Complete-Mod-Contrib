@@ -1,6 +1,6 @@
 package name.turingcomplete.color;
 
-import name.turingcomplete.blocks.block.OmniDirectionalRedstoneBridgeBlock;
+import name.turingcomplete.blocks.block.FourWayRedstoneBridgeBlock;
 import name.turingcomplete.init.blockInit;
 import name.turingcomplete.init.propertyInit;
 import net.fabricmc.api.EnvType;
@@ -18,8 +18,8 @@ public class BlockTint {
     public static void create() {
         ColorProviderRegistry<Block, BlockColorProvider> registerer = ColorProviderRegistry.BLOCK;
         registerer.register((state, world, pos, tintIndex) ->
-                OmniDirectionalRedstoneBridgeBlock.getWireColor(state,tintIndex == 0 ? propertyInit.POWER_X : propertyInit.POWER_Z),
-                blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK
+                FourWayRedstoneBridgeBlock.getWireColor(state,tintIndex == 0 ? propertyInit.POWER_X : propertyInit.POWER_Z),
+                blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK
         );
     }
 }

@@ -108,16 +108,16 @@ public class blockInit {
                     .pistonBehavior(PistonBehavior.DESTROY),
                     true));
 
-    public static final BiDirectionalRedstoneBridgeBlock BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("bi_directional_redstone_bridge_block",
-            new BiDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
+    public static final TwoWayRedstoneBridgeBlock TWO_WAY_REDSTONE_BRIDGE_BLOCK = registerWithItem("bi_directional_redstone_bridge_block",
+            new TwoWayRedstoneBridgeBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
     //===============================================================================================
 
-    public static final OmniDirectionalRedstoneBridgeBlock OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("omni_directional_redstone_bridge_block",
-            new OmniDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
+    public static final FourWayRedstoneBridgeBlock FOUR_WAY_REDSTONE_BRIDGE_BLOCK = registerWithItem("omni_directional_redstone_bridge_block",
+            new FourWayRedstoneBridgeBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));

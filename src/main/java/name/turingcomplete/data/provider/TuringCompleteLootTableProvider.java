@@ -38,8 +38,8 @@ public class TuringCompleteLootTableProvider extends FabricBlockLootTableProvide
         addDrop(blockInit.XNOR_GATE, drops(blockInit.XNOR_GATE));
         addDrop(blockInit.XOR_GATE, drops(blockInit.XOR_GATE));
 
-        addDrop(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, drops(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK));
-        addDrop(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, drops(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK));
+        addDrop(blockInit.TWO_WAY_REDSTONE_BRIDGE_BLOCK, drops(blockInit.TWO_WAY_REDSTONE_BRIDGE_BLOCK));
+        addDrop(blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK, drops(blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK));
 
         addDrop(blockInit.SWITCH_GATE, drops(blockInit.SWITCH_GATE));
         addDrop(blockInit.SR_LATCH_BLOCK, drops(blockInit.SR_LATCH_BLOCK));

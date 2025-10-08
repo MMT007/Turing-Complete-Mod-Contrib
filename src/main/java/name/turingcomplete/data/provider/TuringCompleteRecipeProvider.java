@@ -152,7 +152,7 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(blockInit.OR_GATE),conditionsFromItem(blockInit.OR_GATE))
                 .offerTo(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, 1)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.TWO_WAY_REDSTONE_BRIDGE_BLOCK, 1)
                 .input('R', Blocks.REPEATER)
                 .input('W', Blocks.REDSTONE_WIRE)
                 .pattern(" W ")
@@ -161,13 +161,13 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Blocks.REPEATER),conditionsFromItem(Blocks.REPEATER))
                 .offerTo(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, 1)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK, 1)
                 .input('R', blockInit.LOGIC_BASE_PLATE_BLOCK)
                 .input('W', Blocks.REDSTONE_WIRE)
                 .pattern(" W ")
                 .pattern("WRW")
                 .pattern(" W ")
-                .criterion(hasItem(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK),conditionsFromItem(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK))
+                .criterion(hasItem(blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK),conditionsFromItem(blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK))
                 .offerTo(exporter);
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.SR_LATCH_BLOCK, 1)

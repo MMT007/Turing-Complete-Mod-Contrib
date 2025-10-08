@@ -23,13 +23,13 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.tick.TickPriority;
 
-public class BiDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
+public class TwoWayRedstoneBridgeBlock extends AbstractLogicBlock {
     private static final BooleanProperty POWERED_X = propertyInit.POWERED_X;
     private static final BooleanProperty POWERED_Z = propertyInit.POWERED_Z;
 
     private static final int gate_delay = 2;
 
-    public BiDirectionalRedstoneBridgeBlock(Settings settings) {
+    public TwoWayRedstoneBridgeBlock(Settings settings) {
         super(settings);
         setDefaultState(getDefaultState()
                 .with(POWERED_X,false)
