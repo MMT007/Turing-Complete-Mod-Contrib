@@ -2,6 +2,8 @@ package name.turingcomplete.blocks.multiblock;
 
 import java.util.List;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.Nullable;
 
@@ -349,9 +351,14 @@ public final class Adder extends AbstractLogicMultiblock{
         BlockState bState = getBPlacementState(facing);
 
         if (
-            !canPlaceAt(mainState, world, mainPos) ||
-            !canPlaceAt(bState, world, bPos) ||
-            !canPlaceAt(aState, world, aPos)
+            !mainState.canPlaceAt(world, mainPos) ||
+            !bState.canPlaceAt(world, bPos) ||
+            !aState.canPlaceAt(world, aPos) ||
+
+            //canPlaceAt assumes position is not occupied, but that is only know true for mainPos
+            // ~tgiddings (Dipole)
+            world.getBlockState(aPos).getBlock() != Blocks.AIR ||
+            world.getBlockState(bPos).getBlock() != Blocks.AIR
         ) {
             return null;
         }
@@ -411,7 +418,7 @@ public final class Adder extends AbstractLogicMultiblock{
         return getInputActive(world, partPos, world.getBlockState(partPos),RelativeSide.BACK);
     }
 
-    private BlockPos getAPos(World world, BlockPos mainPos, BlockState mainState){
+    private BlockPos getAPos(WorldView world, BlockPos mainPos, BlockState mainState){
         boolean mirrored = mainState.get(MIRRORED);
         if(mirrored) {
             return mainPos.offset(mainState.get(FACING).rotateYCounterclockwise());
@@ -421,7 +428,7 @@ public final class Adder extends AbstractLogicMultiblock{
         }
     }
 
-    private BlockPos getBPos(World world, BlockPos mainPos, BlockState mainState){
+    private BlockPos getBPos(WorldView world, BlockPos mainPos, BlockState mainState){
         boolean mirrored = mainState.get(MIRRORED);
         if(mirrored) {
             return mainPos.offset(mainState.get(FACING).rotateYClockwise());
