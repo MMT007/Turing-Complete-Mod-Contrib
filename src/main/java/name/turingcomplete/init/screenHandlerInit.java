@@ -16,5 +16,7 @@ public class screenHandlerInit {
         return Registry.register(Registries.SCREEN_HANDLER, TuringComplete.id(id), new ScreenHandlerType<>(factory, FeatureFlags.VANILLA_FEATURES));
     }
 
-    public static void load(){}
+    public static void load(){
+        TuringComplete.LOGGER.info("GUI screens initialised...");
+    }
 }

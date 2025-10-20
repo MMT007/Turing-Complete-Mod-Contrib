@@ -1,11 +1,13 @@
 package name.turingcomplete.data.provider;
 
+import name.turingcomplete.data.recipe.TruthTableRecipeJsonBuilder;
 import name.turingcomplete.init.blockInit;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 
@@ -26,15 +28,15 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Blocks.SMOOTH_STONE_SLAB),conditionsFromItem(Blocks.SMOOTH_STONE_SLAB))
                 .offerTo(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.NAND_GATE, 3)
-                .input('E', blockInit.LOGIC_BASE_PLATE_BLOCK)
-                .input('T', Blocks.REDSTONE_TORCH)
-                .input('R', Blocks.REDSTONE_WIRE)
-                .pattern(" R ")
-                .pattern("TRT")
-                .pattern("EEE")
-                .criterion(hasItem(blockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(blockInit.LOGIC_BASE_PLATE_BLOCK))
-                .offerTo(exporter);
+//        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.NAND_GATE, 3)
+//                .input('E', blockInit.LOGIC_BASE_PLATE_BLOCK)
+//                .input('T', Blocks.REDSTONE_TORCH)
+//                .input('R', Blocks.REDSTONE_WIRE)
+//                .pattern(" R ")
+//                .pattern("TRT")
+//                .pattern("EEE")
+//                .criterion(hasItem(blockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(blockInit.LOGIC_BASE_PLATE_BLOCK))
+//                .offerTo(exporter);
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.NOT_GATE, 2)
                 .input('N', blockInit.NAND_GATE)
@@ -152,7 +154,7 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(blockInit.OR_GATE),conditionsFromItem(blockInit.OR_GATE))
                 .offerTo(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.TWO_WAY_REDSTONE_BRIDGE_BLOCK, 1)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, 1)
                 .input('R', Blocks.REPEATER)
                 .input('W', Blocks.REDSTONE_WIRE)
                 .pattern(" W ")
@@ -161,13 +163,23 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Blocks.REPEATER),conditionsFromItem(Blocks.REPEATER))
                 .offerTo(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK, 1)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, 1)
                 .input('R', blockInit.LOGIC_BASE_PLATE_BLOCK)
                 .input('W', Blocks.REDSTONE_WIRE)
                 .pattern(" W ")
                 .pattern("WRW")
                 .pattern(" W ")
-                .criterion(hasItem(blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK),conditionsFromItem(blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK))
+                .criterion(hasItem(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK),conditionsFromItem(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.PULSE_EXTENDER_BLOCK, 1)
+                .input('R', blockInit.LOGIC_BASE_PLATE_BLOCK)
+                .input('W', Blocks.REDSTONE_WIRE)
+                .input('C', Blocks.COMPARATOR)
+                .pattern(" W ")
+                .pattern("CRC")
+                .pattern(" W ")
+                .criterion(hasItem(Blocks.COMPARATOR),conditionsFromItem(Blocks.COMPARATOR))
                 .offerTo(exporter);
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.SR_LATCH_BLOCK, 1)
@@ -196,6 +208,11 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .pattern("WJ ")
                 .pattern("WW ")
                 .criterion(hasItem(blockInit.JK_LATCH_BLOCK),conditionsFromItem(blockInit.JK_LATCH_BLOCK))
+                .offerTo(exporter);
+
+
+        TruthTableRecipeJsonBuilder.create(blockInit.NAND_GATE.asItem(), Ingredient.EMPTY, 1, 2)
+                .criterion(hasItem(blockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(blockInit.LOGIC_BASE_PLATE_BLOCK))
                 .offerTo(exporter);
     }
 

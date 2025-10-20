@@ -1,7 +1,7 @@
 package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
-import name.turingcomplete.blocks.truthtable.TruthTable;
+import name.turingcomplete.blocks.truthtable.TruthTableBlock;
 import name.turingcomplete.blocks.block.*;
 import name.turingcomplete.blocks.multiblock.Adder;
 import net.minecraft.block.AbstractBlock;
@@ -108,19 +108,25 @@ public class blockInit {
                     .pistonBehavior(PistonBehavior.DESTROY),
                     true));
 
-    public static final TwoWayRedstoneBridgeBlock TWO_WAY_REDSTONE_BRIDGE_BLOCK = registerWithItem("bi_directional_redstone_bridge_block",
-            new TwoWayRedstoneBridgeBlock(AbstractBlock.Settings.create()
+    public static final BiDirectionalRedstoneBridgeBlock BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("bi_directional_redstone_bridge_block",
+            new BiDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
+    public static final OmniDirectionalRedstoneBridgeBlock OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("omni_directional_redstone_bridge_block",
+            new OmniDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
+    public static final PulseExtenderBlock PULSE_EXTENDER_BLOCK = registerWithItem("pulse_extender_block",
+            new PulseExtenderBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
     //===============================================================================================
-
-    public static final FourWayRedstoneBridgeBlock FOUR_WAY_REDSTONE_BRIDGE_BLOCK = registerWithItem("omni_directional_redstone_bridge_block",
-            new FourWayRedstoneBridgeBlock(AbstractBlock.Settings.create()
-                    .breakInstantly()
-                    .sounds(BlockSoundGroup.STONE)
-                    .pistonBehavior(PistonBehavior.DESTROY)));
 
     public static final SRLatchBlock SR_LATCH_BLOCK = registerWithItem("sr_latch_block",
             new SRLatchBlock(AbstractBlock.Settings.create()
@@ -146,9 +152,10 @@ public class blockInit {
             )
     );
 
+    //===============================================================================================
 
-    public static final TruthTable TRUTH_TABLE = registerWithItem("truth_table_block",
-            new TruthTable(Block.Settings.create()
+    public static final TruthTableBlock TRUTH_TABLE = registerWithItem("truth_table_block",
+            new TruthTableBlock(Block.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)
@@ -169,5 +176,7 @@ public class blockInit {
         return registerWithItem(name, block, new Item.Settings());
     }
 
-    public static void load(){}
+    public static void load(){
+        TuringComplete.LOGGER.info("Blocks initialised...");
+    }
 }

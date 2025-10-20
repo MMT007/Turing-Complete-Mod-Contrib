@@ -11,5 +11,7 @@ public class itemInit {
         return Registry.register(Registries.ITEM, TuringComplete.id(name), item);
     }
 
-    public static void load(){}
+    public static void load(){
+        TuringComplete.LOGGER.info("Items initialised...");
+    }
 }

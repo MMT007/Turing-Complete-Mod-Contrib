@@ -30,8 +30,9 @@ public class itemGroupInit {
                 entries.add(blockInit.MEMORY_CELL);
                 entries.add(blockInit.HALF_ADDER);
                 entries.add(blockInit.FULL_ADDER);
-                entries.add(blockInit.TWO_WAY_REDSTONE_BRIDGE_BLOCK);
-                entries.add(blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK);
+                entries.add(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK);
+                entries.add(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK);
+                entries.add(blockInit.PULSE_EXTENDER_BLOCK);
                 entries.add(blockInit.SR_LATCH_BLOCK);
                 entries.add(blockInit.JK_LATCH_BLOCK);
                 entries.add(blockInit.T_LATCH_BLOCK);
@@ -44,5 +45,7 @@ public class itemGroupInit {
         return  Registry.register(Registries.ITEM_GROUP, TuringComplete.id(name), itemGroup);
     }
 
-    public static void load(){}
+    public static void load(){
+        TuringComplete.LOGGER.info("Item Group initialised...");
+    }
 }

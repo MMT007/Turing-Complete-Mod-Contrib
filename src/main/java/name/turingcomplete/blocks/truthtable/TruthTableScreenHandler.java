@@ -1,7 +1,5 @@
 package name.turingcomplete.blocks.truthtable;
 
-import com.mojang.datafixers.util.Pair;
-import name.turingcomplete.TuringComplete;
 import name.turingcomplete.init.blockInit;
 import name.turingcomplete.init.screenHandlerInit;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,14 +9,11 @@ import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.CraftingResultSlot;
-import net.minecraft.util.Identifier;
 import net.minecraft.village.TradeOfferList;
-import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.List;

@@ -70,7 +70,7 @@ public class RedstoneWireBlockMixin {
                 BlockState sourceNeighbour = world.getBlockState(sourceNeighbourPosition);
 
                 // if block is a redstone wire, ignore it
-                if(sourceNeighbour.isOf(blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK)) continue;
+                if(sourceNeighbour.isOf(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK)) continue;
 
                 // else check if the received power is bigger than the current biggest
                 int neighbourPower = sourceNeighbour.getStrongRedstonePower(world,sourceNeighbourPosition,sourceNeighbourDirection);
@@ -83,7 +83,7 @@ public class RedstoneWireBlockMixin {
         } // else:
 
         // if blocks is a redstone wire, return it's power with a falloff
-        if (source.isOf(blockInit.FOUR_WAY_REDSTONE_BRIDGE_BLOCK)) return source.getWeakRedstonePower(world,pos,direction) -1;
+        if (source.isOf(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK)) return source.getWeakRedstonePower(world,pos,direction) -1;
 
         // else get weak power emitted from the block
         return source.getWeakRedstonePower(world,pos,direction);

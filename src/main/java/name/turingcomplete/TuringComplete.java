@@ -1,11 +1,9 @@
 package name.turingcomplete;
 
 
-import name.turingcomplete.blocks.truthtable.TruthTableScreenHandler;
 import name.turingcomplete.init.*;
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,18 +23,16 @@ public class TuringComplete implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("Loading...");
+
+		// Initialize Registries
 		itemInit.load();
-		LOGGER.info("Items initialised...");
 		propertyInit.load();
-		LOGGER.info("Properties initialised...");
 		blockInit.load();
-		LOGGER.info("Blocks initialised...");
 		itemGroupInit.load();
-		LOGGER.info("Item Group initialised...");
 		blockEntityInit.load();
-		LOGGER.info("Block Entities initialised...");
 		screenHandlerInit.load();
-		LOGGER.info("GUI screens initialised...");
+		recipeTypesInit.load();
+		recipeSerializersInit.load();
 
 	}
 

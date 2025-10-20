@@ -15,7 +15,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class FourWayRedstoneBridgeBlock extends AbstractLogicBlock {
+public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     private static final IntProperty POWER_Z;
     private static final IntProperty POWER_X;
 
@@ -23,7 +23,7 @@ public class FourWayRedstoneBridgeBlock extends AbstractLogicBlock {
 
     private boolean wiresGivePower = true;
 
-    public FourWayRedstoneBridgeBlock(Settings settings) {
+    public OmniDirectionalRedstoneBridgeBlock(Settings settings) {
         super(settings);
         setDefaultState(getDefaultState()
                 .with(POWER_X, 0)

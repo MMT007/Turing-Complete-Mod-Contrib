@@ -16,5 +16,7 @@ public class blockEntityInit {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, TuringComplete.id(id), BlockEntityType.Builder.create(factory, block).build());
     }
 
-    public static void load(){}
+    public static void load(){
+        TuringComplete.LOGGER.info("Block Entities initialised...");
+    }
 }

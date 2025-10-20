@@ -16,6 +16,7 @@
   "block.turingcomplete.full_adder" : "Somador",
   "block.turingcomplete.bi_directional_redstone_bridge_block" : "Ponte de Redstone Bi-Direcional",
   "block.turingcomplete.omni_directional_redstone_bridge_block" : "Ponte de Redstone Multi-Direcional",
+  "block.turingcomplete.pulse_extender_block" : "Estendedor de Carga",
   "block.turingcomplete.sr_latch_block" : "Bloco de Trava SR",
   "block.turingcomplete.jk_latch_block" : "Bloco de Trava JK",
   "block.turingcomplete.t_latch_block" : "Bloco de Trava T",

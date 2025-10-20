@@ -1,0 +1,6 @@
+{
+	"parent": "turingcomplete:block/pulse_extender/pulse_extender_top",
+	"textures": {
+		"top": "turingcomplete:block/pulse_extender/pulse_extender_timer6"
+	}
+}

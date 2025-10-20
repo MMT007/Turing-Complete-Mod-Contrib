@@ -216,18 +216,12 @@ public abstract class AbstractLogicBlock extends HorizontalFacingBlock implement
         }
 
         public RelativeSide getOpposite(){
-            switch(this) {
-                case BACK:
-                    return FRONT;
-                case FRONT:
-                    return BACK;
-                case LEFT:
-                    return RIGHT;
-                case RIGHT:
-                    return LEFT;
-                default:
-                    throw new IllegalStateException("Relative side not Front, Back, Left, or Right");
-            }
+            return switch (this) {
+                case BACK -> FRONT;
+                case FRONT -> BACK;
+                case LEFT -> RIGHT;
+                case RIGHT -> LEFT;
+            };
         }
     }
 }

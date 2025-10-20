@@ -6,17 +6,16 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class TruthTable extends BlockWithEntity {
+public class TruthTableBlock extends BlockWithEntity {
 
 
-    public TruthTable(Settings settings) {
+    public TruthTableBlock(Settings settings) {
         super(settings);
     }
 
