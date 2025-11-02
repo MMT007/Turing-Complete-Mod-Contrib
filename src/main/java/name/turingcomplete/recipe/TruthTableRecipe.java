@@ -18,13 +18,15 @@ import net.minecraft.world.World;
 
 public class TruthTableRecipe implements Recipe<TruthTableRecipe.TruthTableRecipeInput> {
     private final ItemStack output;
+    private final Integer base_required;
     private final Integer redstone_required;
     private final Integer redstone_torches_required;
     private final Ingredient extender_module;
     private final Ingredient base_item = Ingredient.ofItems(blockInit.LOGIC_BASE_PLATE_BLOCK);
 
-    public TruthTableRecipe(Integer redstone_required, Integer redstone_torches_required, Ingredient extender_module, ItemStack output){
+    public TruthTableRecipe(Integer base_required,Integer redstone_required, Integer redstone_torches_required, Ingredient extender_module, ItemStack output){
         this.output = output;
+        this.base_required = base_required;
         this.redstone_required = redstone_required;
         this.redstone_torches_required = redstone_torches_required;
         this.extender_module = extender_module;
@@ -68,28 +70,31 @@ public class TruthTableRecipe implements Recipe<TruthTableRecipe.TruthTableRecip
 
     public static class Serializer implements RecipeSerializer<TruthTableRecipe>{
         public static MapCodec<TruthTableRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-                    Codec.INT.fieldOf("redstone_required").forGetter(recipe -> recipe.redstone_required),
-                    Codec.INT.fieldOf("redstone_torches_required").forGetter(recipe -> recipe.redstone_torches_required),
-                    Ingredient.ALLOW_EMPTY_CODEC.fieldOf("extender_module").forGetter(recipe -> recipe.extender_module),
-                    ItemStack.CODEC.fieldOf("output").forGetter(recipe -> recipe.output)
+                Codec.INT.fieldOf("base_required").forGetter(recipe -> recipe.base_required),
+                Codec.INT.lenientOptionalFieldOf("redstone_required",0).forGetter(recipe -> recipe.redstone_required),
+                Codec.INT.lenientOptionalFieldOf("redstone_torches_required",0).forGetter(recipe -> recipe.redstone_torches_required),
+                Ingredient.ALLOW_EMPTY_CODEC.fieldOf("extender_module").forGetter(recipe -> recipe.extender_module),
+                ItemStack.CODEC.fieldOf("output").forGetter(recipe -> recipe.output)
             ).apply(instance, TruthTableRecipe::new)
         );
         public static final PacketCodec<RegistryByteBuf, TruthTableRecipe> PACKET_CODEC = PacketCodec.ofStatic(TruthTableRecipe.Serializer::write, TruthTableRecipe.Serializer::read);
 
         private static TruthTableRecipe read(RegistryByteBuf buf) {
-            ItemStack output = ItemStack.PACKET_CODEC.decode(buf);
+            Integer base_required = PacketCodecs.INTEGER.decode(buf);
             Integer redstone_required = PacketCodecs.INTEGER.decode(buf);
             Integer torch_input = PacketCodecs.INTEGER.decode(buf);
             Ingredient extender_input = Ingredient.PACKET_CODEC.decode(buf);
+            ItemStack output = ItemStack.PACKET_CODEC.decode(buf);
 
-            return new TruthTableRecipe(redstone_required,torch_input,extender_input,output);
+            return new TruthTableRecipe(base_required,redstone_required,torch_input,extender_input,output);
         }
 
         private static void write(RegistryByteBuf buf, TruthTableRecipe recipe){
-            ItemStack.PACKET_CODEC.encode(buf,recipe.output);
+            PacketCodecs.INTEGER.encode(buf,recipe.base_required);
             PacketCodecs.INTEGER.encode(buf,recipe.redstone_required);
             PacketCodecs.INTEGER.encode(buf,recipe.redstone_torches_required);
             Ingredient.PACKET_CODEC.encode(buf, recipe.extender_module);
+            ItemStack.PACKET_CODEC.encode(buf,recipe.output);
         }
 
         public MapCodec<TruthTableRecipe> codec() {return CODEC;}

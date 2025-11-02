@@ -1,27 +1,25 @@
-package name.turingcomplete.blocks.truthtable;
+package name.turingcomplete.screen;
 
 import name.turingcomplete.init.blockInit;
 import name.turingcomplete.init.screenHandlerInit;
+import name.turingcomplete.screen.data.GateCraftingRecipeList;
+import name.turingcomplete.screen.slot.TruthTableOutputSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.screen.slot.CraftingResultSlot;
-import net.minecraft.village.TradeOfferList;
 
 import java.awt.*;
 import java.util.List;
 import java.util.function.Predicate;
 
 public class TruthTableScreenHandler extends ScreenHandler {
-    private final RecipeInputInventory input;
-    private final Inventory result;
+    private final TruthTableInventory inventory;
 
     public static ScreenHandlerType<TruthTableScreenHandler> TYPE;
     // List of rules for each input slot for the GUI. Items listed here are allowed in the slots.
@@ -33,20 +31,21 @@ public class TruthTableScreenHandler extends ScreenHandler {
             stack -> false
     );
     public static final List<Point> SLOT_POSITIONS = List.of(
-            new Point(144, 30),  // slot 0 - top-left
-            new Point(162, 21),  // slot 1 - center
-            new Point(180, 30),  // slot 2 - top-right
-            new Point(162, 39)   // slot 3 - bottom-center
+            new Point(162, 30),  // slot 0 - top-left
+            new Point(180, 21),  // slot 1 - center
+            new Point(198, 30),  // slot 2 - top-right
+            new Point(180, 39)   // slot 3 - bottom-center
     );
 
+    //===============================================================================================
+
     public TruthTableScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new TruthTableInputInventory(), new SimpleInventory(1));
+        this(syncId, playerInventory, new SimpleInventory(1));
     }
 
-    public TruthTableScreenHandler(int syncId, PlayerInventory playerInventory, RecipeInputInventory input, Inventory result) {
+    public TruthTableScreenHandler(int syncId, PlayerInventory playerInventory, Inventory result) {
         super(screenHandlerInit.TRUTH_TABLE, syncId);
-        this.input = input;
-        this.result = result;
+        this.inventory = new TruthTableInventory();
 
         // Input slots for crafting
         for (int i = 0; i < INPUT_RULES.size(); i++){
@@ -55,7 +54,7 @@ public class TruthTableScreenHandler extends ScreenHandler {
             int startX = pos.x;
             int startY = pos.y;
 
-            this.addSlot(new Slot(input, i, startX, startY){
+            this.addSlot(new Slot(inventory, i, startX, startY){
                 @Override
                 public boolean canInsert(ItemStack stack){
                     return rule.test(stack);
@@ -64,11 +63,10 @@ public class TruthTableScreenHandler extends ScreenHandler {
         }
         
         // Output slot
-        this.addSlot(new CraftingResultSlot(playerInventory.player, input, result, 0, 243, 30));
+        this.addSlot(new TruthTableOutputSlot(playerInventory.player, inventory, 4, 261, 30));
 
         // Player inventory
-        int invOffsetX = 126;
-        int invOffsetY = 74;
+        int invOffsetX = 144, invOffsetY = 74;
         for (int row = 0; row < 3; ++row){
             for (int col = 0; col < 9; ++col){
                 this.addSlot(new Slot(playerInventory, col + row * 9 + 9, invOffsetX + col * 18, invOffsetY + row * 18));
@@ -76,12 +74,30 @@ public class TruthTableScreenHandler extends ScreenHandler {
         }
 
         // Hotbar
-        int hotbarOffsetX = 126;
-        int hotbarOffsetY = 132;
+        int hotbarOffsetX = 144, hotbarOffsetY = 132;
         for (int col = 0; col < 9; ++col){
             this.addSlot(new Slot(playerInventory, col, hotbarOffsetX + col * 18, hotbarOffsetY));
         }
     }
+
+    //===============================================================================================
+
+    @Override
+    public boolean canUse(PlayerEntity player) {
+        return true;
+    }
+
+    public Inventory getInventory(){
+        return inventory;
+    }
+
+    public void setOfferIndex(int index) {
+        this.inventory.setRecipeIndex(index);
+    }
+
+    public GateCraftingRecipeList getRecipes() {return this.inventory.getRecipes();}
+
+    //===============================================================================================
 
     @Override
     public void onClosed(PlayerEntity player) {
@@ -90,8 +106,8 @@ public class TruthTableScreenHandler extends ScreenHandler {
         // Only do this on the server side
         if (!player.getWorld().isClient) {
             // Loop through your input slots
-            for (int i = 0; i < input.size(); i++) {
-                ItemStack stack = input.removeStack(i);
+            for (int i = 0; i < inventory.size(); i++) {
+                ItemStack stack = inventory.removeStack(i);
                 if (!stack.isEmpty()) {
                     // Drop it at the player's feet
                     player.dropItem(stack, false);
@@ -145,20 +161,10 @@ public class TruthTableScreenHandler extends ScreenHandler {
         return moved;
     }
 
-    @Override
-    public boolean canUse(PlayerEntity player) {
-        return true;
-    }
+    //===============================================================================================
 
-    public TradeOfferList getRecipes(){
-        return new TradeOfferList();
-    }
-
-    public Inventory getInput(){
-        return input;
-    }
-
-    public Inventory getResult(){
-        return result;
+    public void onContentChanged(Inventory inventory) {
+        this.inventory.updateOffers();
+        super.onContentChanged(inventory);
     }
 }
