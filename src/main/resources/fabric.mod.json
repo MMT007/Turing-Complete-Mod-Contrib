@@ -19,7 +19,7 @@
 			"name.turingcomplete.TuringComplete"
 		],
 		"client": [
-			"name.turingcomplete.TuringCompleteClient"
+			"name.turingcomplete.client.TuringCompleteClient"
 		],
 		"fabric-datagen": [
 			"name.turingcomplete.TuringCompleteDataGenerator"

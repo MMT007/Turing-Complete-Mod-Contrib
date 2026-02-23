@@ -1,7 +1,7 @@
 package name.turingcomplete.blocks.block;
 
 import name.turingcomplete.blocks.AbstractLogicBlock;
-import name.turingcomplete.init.propertyInit;
+import name.turingcomplete.init.PropertyInit;
 import net.minecraft.block.*;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
@@ -290,8 +290,8 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     }
 
     static {
-        POWER_X = propertyInit.POWER_X;
-        POWER_Z = propertyInit.POWER_Z;
+        POWER_X = PropertyInit.POWER_X;
+        POWER_Z = PropertyInit.POWER_Z;
         COLORS = Util.make(new Vec3d[16], (colors) -> {
             for(int i = 0; i <= 15; ++i) {
                 float f = (float)i / 15.0F;

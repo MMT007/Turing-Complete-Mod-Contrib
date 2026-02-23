@@ -4,7 +4,7 @@ import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 import com.mojang.serialization.MapCodec;
 
-import name.turingcomplete.init.propertyInit;
+import name.turingcomplete.init.PropertyInit;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -25,7 +25,7 @@ import net.minecraft.world.WorldView;
 
 //anything on a logic plate
 public abstract class AbstractLogicBlock extends HorizontalFacingBlock implements ConnectsToRedstone{
-    public static final BooleanProperty MIRRORED = propertyInit.SWAPPED_DIR;
+    public static final BooleanProperty MIRRORED = PropertyInit.SWAPPED_DIR;
 
     protected AbstractLogicBlock(Settings settings) {
         super(settings);

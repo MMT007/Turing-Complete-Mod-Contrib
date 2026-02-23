@@ -1,6 +1,7 @@
 package name.turingcomplete.blocks.truthtable;
 
-import name.turingcomplete.init.blockEntityInit;
+import name.turingcomplete.init.BlockEntityInit;
+import name.turingcomplete.truthtable.TruthTableScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class TruthTableBlockEntity extends BlockEntity implements NamedScreenHandlerFactory {
     public TruthTableBlockEntity(BlockPos pos, BlockState state) {
-        super(blockEntityInit.TRUTH_TABLE_BLOCK_ENTITY, pos, state);
+        super(BlockEntityInit.TRUTH_TABLE_BLOCK_ENTITY, pos, state);
     }
 
     @Override

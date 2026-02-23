@@ -3,7 +3,7 @@ package name.turingcomplete.blocks.block;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 import name.turingcomplete.blocks.AbstractLogicBlock;
-import name.turingcomplete.init.propertyInit;
+import name.turingcomplete.init.PropertyInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -24,8 +24,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.tick.TickPriority;
 
 public class BiDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
-    private static final BooleanProperty POWERED_X = propertyInit.POWERED_X;
-    private static final BooleanProperty POWERED_Z = propertyInit.POWERED_Z;
+    private static final BooleanProperty POWERED_X = PropertyInit.POWERED_X;
+    private static final BooleanProperty POWERED_Z = PropertyInit.POWERED_Z;
 
     private static final int gate_delay = 2;
 

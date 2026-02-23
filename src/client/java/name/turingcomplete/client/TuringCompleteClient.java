@@ -1,9 +1,9 @@
-package name.turingcomplete;
+package name.turingcomplete.client;
 
-import name.turingcomplete.init.screenHandlerInit;
+import name.turingcomplete.init.ScreenHandlerInit;
 import name.turingcomplete.client.screen.TruthTableScreen;
-import name.turingcomplete.color.BlockTint;
-import name.turingcomplete.init.blockInit;
+import name.turingcomplete.client.color.BlockTint;
+import name.turingcomplete.init.BlockInit;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -14,15 +14,15 @@ public class TuringCompleteClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		// To make some parts of the block transparent (like glass, saplings and doors):
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
-				blockInit.NOT_GATE,blockInit.NAND_GATE,
-				blockInit.NOR_GATE,blockInit.XNOR_GATE,
-				blockInit.PULSE_EXTENDER_BLOCK
+				BlockInit.NOT_GATE, BlockInit.NAND_GATE,
+				BlockInit.NOR_GATE, BlockInit.XNOR_GATE,
+				BlockInit.PULSE_EXTENDER_BLOCK
 		);
 
-		BlockRenderLayerMap.INSTANCE.putBlock(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK,RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlock(BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK,RenderLayer.getTranslucent());
 
 		BlockTint.create();
 
-		HandledScreens.register(screenHandlerInit.TRUTH_TABLE, TruthTableScreen::new);
+		HandledScreens.register(ScreenHandlerInit.TRUTH_TABLE, TruthTableScreen::new);
 	}
 }

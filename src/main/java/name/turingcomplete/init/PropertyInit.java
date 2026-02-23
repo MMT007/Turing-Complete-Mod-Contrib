@@ -4,7 +4,7 @@ import name.turingcomplete.TuringComplete;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 
-public class propertyInit {
+public class PropertyInit {
     public static final BooleanProperty SWAPPED_DIR = BooleanProperty.of("swapped_direction");
     public static final BooleanProperty POWERED_X = BooleanProperty.of("powered_x");
     public static final BooleanProperty POWERED_Z = BooleanProperty.of("powered_z");

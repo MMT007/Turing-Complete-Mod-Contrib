@@ -13,7 +13,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 
-public class blockInit {
+public class BlockInit {
     public static final NANDGateBlock NAND_GATE = registerWithItem("nand_gate_block",
             new NANDGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
@@ -168,7 +168,7 @@ public class blockInit {
 
     public static <T extends Block> T registerWithItem(String name, T block, Item.Settings settings){
         T registered = register(name, block);
-        itemInit.register(name, new BlockItem(registered, settings));
+        ItemInit.register(name, new BlockItem(registered, settings));
         return registered;
     }
 

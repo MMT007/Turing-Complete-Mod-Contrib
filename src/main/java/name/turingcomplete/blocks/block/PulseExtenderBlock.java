@@ -1,7 +1,7 @@
 package name.turingcomplete.blocks.block;
 
 import name.turingcomplete.blocks.AbstractLogicBlock;
-import name.turingcomplete.init.propertyInit;
+import name.turingcomplete.init.PropertyInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -22,9 +22,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 
 public class PulseExtenderBlock extends AbstractLogicBlock {
-    private static final IntProperty DELAY = propertyInit.DELAY_8;
-    private static final IntProperty TIMER = propertyInit.TIMER;
-    private static final IntProperty TICK = propertyInit.TICK;
+    private static final IntProperty DELAY = PropertyInit.DELAY_8;
+    private static final IntProperty TIMER = PropertyInit.TIMER;
+    private static final IntProperty TICK = PropertyInit.TICK;
 
     public PulseExtenderBlock(Settings settings) {
         super(settings);

@@ -1,9 +1,8 @@
 {
 	"required": true,
-	"package": "name.turingcomplete.mixin.client",
+	"package": "name.turingcomplete.client.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ExampleClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

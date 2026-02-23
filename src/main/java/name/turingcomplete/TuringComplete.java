@@ -25,14 +25,16 @@ public class TuringComplete implements ModInitializer {
 		LOGGER.info("Loading...");
 
 		// Initialize Registries
-		itemInit.load();
-		propertyInit.load();
-		blockInit.load();
-		itemGroupInit.load();
-		blockEntityInit.load();
-		screenHandlerInit.load();
-		recipeTypesInit.load();
-		recipeSerializersInit.load();
+		ItemInit.load();
+		PropertyInit.load();
+		BlockInit.load();
+		ItemGroupInit.load();
+		BlockEntityInit.load();
+		ScreenHandlerInit.load();
+		RecipeTypesInit.load();
+		RecipeSerializersInit.load();
+		PacketTypeInit.register();
+		NetworkReceiverInit.registerServer();
 
 	}
 
