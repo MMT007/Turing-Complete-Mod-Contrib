@@ -15,21 +15,10 @@ import java.util.List;
 import java.util.function.Function;
 
 public class TruthTableCraftList extends ArrayList<TruthTableCraft> {
-    public static final Codec<TruthTableCraftList> CODEC = TruthTableCraft.CODEC
-        .listOf().fieldOf("Crafts")
-        .xmap(TruthTableCraftList::new, Function.identity())
-        .codec();
-
-    public static final PacketCodec<RegistryByteBuf, TruthTableCraftList> PACKET_CODEC = TruthTableCraft.PACKET_CODEC
-        .collect(PacketCodecs.toCollection(TruthTableCraftList::new));
-
     public TruthTableCraftList() {}
 
     private TruthTableCraftList(int size) {
         super(size);
-    }
-    private TruthTableCraftList(Collection<TruthTableCraft> craft) {
-        super(craft);
     }
 
     @Nullable
@@ -65,15 +54,6 @@ public class TruthTableCraftList extends ArrayList<TruthTableCraft> {
                 recipe.getOutput()
             ));
         }
-
-        return craftList;
-    }
-
-    public TruthTableCraftList copy() {
-        var craftList = new TruthTableCraftList(this.size());
-
-        for (TruthTableCraft craft : this)
-            craftList.add(craft.copy());
 
         return craftList;
     }

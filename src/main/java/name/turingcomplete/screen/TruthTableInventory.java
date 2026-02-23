@@ -24,9 +24,6 @@ public class TruthTableInventory implements Inventory {
         return 5;
     }
 
-    public List<ItemStack> getHeldStacks() {
-        return stacks;
-    }
     public ItemStack getStack(int slot) {
         return stacks.get(slot);
     }
@@ -117,7 +114,6 @@ public class TruthTableInventory implements Inventory {
     // TODO: Get Player's Unlocked Recipes
     public TruthTableCraftList getRecipes(){
         if (player instanceof ServerPlayerEntity serverPlayer){
-            var book = serverPlayer.getRecipeBook();
             if (serverPlayer.getServer() == null) return new TruthTableCraftList();
 
             var manager = serverPlayer.getServer().getRecipeManager();
