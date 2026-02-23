@@ -4,8 +4,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import name.turingcomplete.TuringComplete;
 import name.turingcomplete.init.RecipeTypesInit;
 import name.turingcomplete.network.c2s.SelectTruthTableCraftC2SPacket;
-import name.turingcomplete.truthtable.TruthTableCraftList;
-import name.turingcomplete.truthtable.TruthTableScreenHandler;
+import name.turingcomplete.screen.TruthTableCraftList;
+import name.turingcomplete.screen.TruthTableScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -24,7 +24,7 @@ import net.minecraft.util.math.MathHelper;
 import java.awt.*;
 import java.util.List;
 
-import static name.turingcomplete.truthtable.TruthTableScreenHandler.SLOT_POSITIONS;
+import static name.turingcomplete.screen.TruthTableScreenHandler.SLOT_POSITIONS;
 
 @Environment(EnvType.CLIENT)
 public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {

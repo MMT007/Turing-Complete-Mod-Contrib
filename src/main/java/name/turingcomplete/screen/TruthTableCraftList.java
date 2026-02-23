@@ -1,4 +1,4 @@
-package name.turingcomplete.truthtable;
+package name.turingcomplete.screen;
 
 import com.mojang.serialization.Codec;
 import name.turingcomplete.data.recipe.TruthTableRecipe;

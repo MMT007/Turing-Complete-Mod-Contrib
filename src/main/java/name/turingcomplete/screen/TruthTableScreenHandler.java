@@ -1,4 +1,4 @@
-package name.turingcomplete.truthtable;
+package name.turingcomplete.screen;
 
 import name.turingcomplete.init.BlockInit;
 import name.turingcomplete.init.ScreenHandlerInit;

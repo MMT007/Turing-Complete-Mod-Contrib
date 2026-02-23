@@ -1,7 +1,7 @@
 package name.turingcomplete.init;
 
 import name.turingcomplete.network.c2s.SelectTruthTableCraftC2SPacket;
-import name.turingcomplete.truthtable.TruthTableScreenHandler;
+import name.turingcomplete.screen.TruthTableScreenHandler;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 public class NetworkReceiverInit {

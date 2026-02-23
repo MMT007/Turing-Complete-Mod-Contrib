@@ -1,4 +1,4 @@
-package name.turingcomplete.truthtable;
+package name.turingcomplete.screen;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
