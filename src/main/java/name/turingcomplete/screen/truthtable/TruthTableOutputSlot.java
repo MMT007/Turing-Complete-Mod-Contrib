@@ -1,5 +1,6 @@
-package name.turingcomplete.screen;
+package name.turingcomplete.screen.truthtable;
 
+import name.turingcomplete.screen.truthtable.data.TruthTableCraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;

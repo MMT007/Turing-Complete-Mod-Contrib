@@ -1,5 +1,6 @@
 package name.turingcomplete.data.recipe;
 
+import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.AdvancementRequirements;
@@ -11,15 +12,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class TruthTableRecipeBuilder {
     private final int logic_plate_count;
     private final int redstone_count;
     private final int redstone_torch_count;
     private final ItemStack upgrade;
+    private final List<TruthTableCategory> categories = new ArrayList<>();
 
     private final ItemStack output;
 
@@ -55,6 +55,18 @@ public class TruthTableRecipeBuilder {
         ItemConvertible upgrade
     ){ return create(output, logic_plate_count, redstone_count, redstone_torch_count, new ItemStack(upgrade)); }
 
+    public static TruthTableRecipeBuilder create(
+        ItemStack output,
+        int logic_plate_count,
+        int redstone_count,
+        int redstone_torch_count
+    ){ return new TruthTableRecipeBuilder(output, logic_plate_count, redstone_count, redstone_torch_count, ItemStack.EMPTY); }
+
+    public TruthTableRecipeBuilder onCategory(TruthTableCategory category){
+        this.categories.add(category);
+        return this;
+    }
+
     public TruthTableRecipeBuilder criterion(String string, AdvancementCriterion<?> advancementCriterion) {
         this.criteria.put(string, advancementCriterion);
         return this;
@@ -77,7 +89,10 @@ public class TruthTableRecipeBuilder {
         this.criteria.forEach(builder::criterion);
 
         TruthTableRecipe truthTableRecipe = new TruthTableRecipe(
-            this.logic_plate_count, this.redstone_count, this.redstone_torch_count, this.upgrade, this.output
+            this.categories.stream().map(TruthTableCategory::getId).toList(),
+            this.logic_plate_count, this.redstone_count,
+            this.redstone_torch_count, this.upgrade,
+            this.output
         );
 
         exporter.accept(recipeId, truthTableRecipe, builder.build(recipeId));

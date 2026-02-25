@@ -2,6 +2,7 @@ package name.turingcomplete.data.provider;
 
 import name.turingcomplete.data.recipe.TruthTableRecipeBuilder;
 import name.turingcomplete.init.BlockInit;
+import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
@@ -211,46 +212,61 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .offerTo(exporter);
 
 
+        //======================================================
+        // TRUTH TABLE RECIPES
+        //======================================================
 
 
-
-        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.AND_GATE), 1, 1, 3, ItemStack.EMPTY)
+        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.AND_GATE), 1, 1, 3)
+            .onCategory(TruthTableCategory.AND_GATES)
             .criterion(hasItem(BlockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(BlockInit.LOGIC_BASE_PLATE_BLOCK))
             .offerTo(exporter);
 
-        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.NAND_GATE), 1, 1, 2, ItemStack.EMPTY)
+        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.NAND_GATE), 1, 1, 2)
+            .onCategory(TruthTableCategory.AND_GATES)
+            .onCategory(TruthTableCategory.NOT_GATES)
             .criterion(hasItem(BlockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(BlockInit.LOGIC_BASE_PLATE_BLOCK))
             .offerTo(exporter);
 
-        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.OR_GATE), 1, 1, 2, ItemStack.EMPTY)
+        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.OR_GATE), 1, 1, 2)
+            .onCategory(TruthTableCategory.OR_GATES)
             .criterion(hasItem(BlockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(BlockInit.LOGIC_BASE_PLATE_BLOCK))
             .offerTo(exporter);
 
-        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.NOR_GATE), 1, 1, 1, ItemStack.EMPTY)
+        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.NOR_GATE), 1, 1, 1)
+            .onCategory(TruthTableCategory.OR_GATES)
+            .onCategory(TruthTableCategory.NOT_GATES)
             .criterion(hasItem(BlockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(BlockInit.LOGIC_BASE_PLATE_BLOCK))
             .offerTo(exporter);
 
-        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.XOR_GATE), 1, 5, 7, ItemStack.EMPTY)
+        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.XOR_GATE), 1, 5, 7)
+            .onCategory(TruthTableCategory.XOR_GATES)
             .criterion(hasItem(BlockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(BlockInit.LOGIC_BASE_PLATE_BLOCK))
             .offerTo(exporter);
 
-        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.XNOR_GATE), 1, 5, 8, ItemStack.EMPTY)
+        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.XNOR_GATE), 1, 5, 8)
+            .onCategory(TruthTableCategory.XOR_GATES)
+            .onCategory(TruthTableCategory.NOT_GATES)
             .criterion(hasItem(BlockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(BlockInit.LOGIC_BASE_PLATE_BLOCK))
             .offerTo(exporter);
 
-        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.NOT_GATE), 1, 1, 1, ItemStack.EMPTY)
+        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.NOT_GATE), 1, 1, 1)
+            .onCategory(TruthTableCategory.NOT_GATES)
             .criterion(hasItem(BlockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(BlockInit.LOGIC_BASE_PLATE_BLOCK))
             .offerTo(exporter);
 
-        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.THREE_AND_GATE), 1, 1, 4, ItemStack.EMPTY)
+        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.THREE_AND_GATE), 1, 1, 4)
+            .onCategory(TruthTableCategory.AND_GATES)
             .criterion(hasItem(BlockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(BlockInit.LOGIC_BASE_PLATE_BLOCK))
             .offerTo(exporter);
 
-        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.THREE_OR_GATE), 1, 2, 2, ItemStack.EMPTY)
+        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.THREE_OR_GATE), 1, 2, 2)
+            .onCategory(TruthTableCategory.OR_GATES)
             .criterion(hasItem(BlockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(BlockInit.LOGIC_BASE_PLATE_BLOCK))
             .offerTo(exporter);
 
-        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.SWITCH_GATE), 1, 1, 3, ItemStack.EMPTY)
+        TruthTableRecipeBuilder.create(new ItemStack(BlockInit.SWITCH_GATE), 1, 1, 3)
+            .onCategory(TruthTableCategory.LATCHES)
             .criterion(hasItem(BlockInit.LOGIC_BASE_PLATE_BLOCK),conditionsFromItem(BlockInit.LOGIC_BASE_PLATE_BLOCK))
             .offerTo(exporter);
     }

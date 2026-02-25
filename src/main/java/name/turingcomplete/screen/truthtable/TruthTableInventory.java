@@ -1,6 +1,9 @@
-package name.turingcomplete.screen;
+package name.turingcomplete.screen.truthtable;
 
 import name.turingcomplete.init.RecipeTypesInit;
+import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
+import name.turingcomplete.screen.truthtable.data.TruthTableCraft;
+import name.turingcomplete.screen.truthtable.data.TruthTableCrafts;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -8,16 +11,18 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.collection.DefaultedList;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 public class TruthTableInventory implements Inventory {
     private final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(5,ItemStack.EMPTY);
     private final PlayerEntity player;
+    public final TruthTableCrafts crafts;
+
+    private TruthTableCategory selectedCategory;
     @Nullable private TruthTableCraft selectedCraft;
     private int selectedCraftIndex;
 
     public TruthTableInventory(PlayerEntity player) {
         this.player = player;
+        this.crafts = getRecipes();
     }
 
     public int size() {
@@ -28,10 +33,14 @@ public class TruthTableInventory implements Inventory {
         return stacks.get(slot);
     }
 
+    public void setSelectedCategory(TruthTableCategory category){
+        this.selectedCategory = category;
+    }
+
     public void setSelectedCraftIndex(int index){
         this.selectedCraftIndex = index;
-        updateCrafts();
     }
+
     public @Nullable TruthTableCraft getSelectedCraft(){return this.selectedCraft;}
 
     public boolean isEmpty(){return this.isEmpty(true);}
@@ -93,10 +102,13 @@ public class TruthTableInventory implements Inventory {
         var redstone_torches = stacks.get(2);
         var upgrades = stacks.get(3);
 
-        var craftList = getRecipes();
+        var craftList = crafts;
 
         if (!craftList.isEmpty()) {
-            var craft = craftList.getValidCraft(logic_plate,redstone_dusts,redstone_torches,upgrades, selectedCraftIndex);
+            var craft = craftList.getValidCraft(
+                logic_plate, redstone_dusts, redstone_torches, upgrades,
+                selectedCategory, selectedCraftIndex
+            );
 
             if (craft != null) {
                 this.selectedCraft = craft;
@@ -112,15 +124,15 @@ public class TruthTableInventory implements Inventory {
     public boolean canPlayerUse(PlayerEntity player) {return true;}
 
     // TODO: Get Player's Unlocked Recipes
-    public TruthTableCraftList getRecipes(){
+    private TruthTableCrafts getRecipes(){
         if (player instanceof ServerPlayerEntity serverPlayer){
-            if (serverPlayer.getServer() == null) return new TruthTableCraftList();
+            if (serverPlayer.getServer() == null) return new TruthTableCrafts();
 
             var manager = serverPlayer.getServer().getRecipeManager();
-            return TruthTableCraftList.fromRecipes(manager.listAllOfType(RecipeTypesInit.TRUTH_TABLE_RECIPE_TYPE));
+            return TruthTableCrafts.fromRecipes(manager.listAllOfType(RecipeTypesInit.TRUTH_TABLE_RECIPE_TYPE));
         }
 
-        return new TruthTableCraftList();
+        return new TruthTableCrafts();
     }
 
 }

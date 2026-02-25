@@ -1,7 +1,8 @@
-package name.turingcomplete.screen;
+package name.turingcomplete.screen.truthtable;
 
 import name.turingcomplete.init.BlockInit;
 import name.turingcomplete.init.ScreenHandlerInit;
+import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -146,24 +147,31 @@ public class TruthTableScreenHandler extends ScreenHandler {
     }
 
     public boolean canUse(PlayerEntity player) {return inventory.canPlayerUse(player);}
+
+    public void setSelectedCategory(TruthTableCategory category) {this.inventory.setSelectedCategory(category);}
     public void setCraftIndex(int index) {this.inventory.setSelectedCraftIndex(index);}
+    public void updateInventory(){this.inventory.updateCrafts();}
 
-    public void switchTo(int craftIndex) {
-        if (craftIndex >= 0 && this.inventory.getRecipes().size() > craftIndex) {
-            insertItem(this.inventory.getStack(0),0);
-            insertItem(this.inventory.getStack(1),1);
-            insertItem(this.inventory.getStack(2),2);
-            insertItem(this.inventory.getStack(4),4);
+    public void switchTo(TruthTableCategory category, int craftIndex) {
+        if (this.inventory.crafts.containsKey(category)) {
+            var craft_list = this.inventory.crafts.get(category);
+            if (craftIndex >= 0 && craft_list.size() > craftIndex) {
+                insertItem(this.inventory.getStack(0), 0);
+                insertItem(this.inventory.getStack(1), 1);
+                insertItem(this.inventory.getStack(2), 2);
+                insertItem(this.inventory.getStack(4), 4);
 
-            if (this.inventory.isEmpty(false)) {
-                var craft = this.inventory.getRecipes().get(craftIndex);
-                this.autofill(0, craft.getLogicPlate());
-                this.autofill(1, craft.getRedstone());
-                this.autofill(2, craft.getRedstoneTorch());
-                if (!craft.getUpgrade().isEmpty())
-                    this.autofill(3, craft.getUpgrade());
+                if (this.inventory.isEmpty(false)) {
+                    var craft = craft_list.get(craftIndex);
+
+                    this.autofill(0, craft.getLogicPlate());
+                    this.autofill(1, craft.getRedstone());
+                    this.autofill(2, craft.getRedstoneTorch());
+                    if (!craft.getUpgrade().isEmpty())
+                        this.autofill(3, craft.getUpgrade());
+                }
+
             }
-
         }
     }
 

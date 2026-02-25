@@ -3,9 +3,11 @@ package name.turingcomplete.data.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
 import name.turingcomplete.init.BlockInit;
 import name.turingcomplete.init.RecipeSerializersInit;
 import name.turingcomplete.init.RecipeTypesInit;
+import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.RegistryByteBuf;
@@ -14,11 +16,14 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Objects;
 
 public class TruthTableRecipe implements Recipe<TruthTableRecipe.TruthTableRecipeInput> {
+    private final List<TruthTableCategory> categories;
     private final Integer logic_plate_required;
     private final Integer redstone_required;
     private final Integer redstone_torches_required;
@@ -26,12 +31,14 @@ public class TruthTableRecipe implements Recipe<TruthTableRecipe.TruthTableRecip
     private final ItemStack output;
 
     public TruthTableRecipe(
+        List<Identifier> categories,
         Integer logic_plate_required,
         Integer redstone_required,
         Integer redstone_torches_required,
         ItemStack upgrade,
         ItemStack output
     ){
+        this.categories = categories.stream().map(TruthTableCategory::fromID).toList();
         this.logic_plate_required = Objects.requireNonNullElse(logic_plate_required,0);
         this.redstone_required = Objects.requireNonNullElse(redstone_required,0);
         this.redstone_torches_required = Objects.requireNonNullElse(redstone_torches_required,0);
@@ -67,6 +74,7 @@ public class TruthTableRecipe implements Recipe<TruthTableRecipe.TruthTableRecip
     public Integer getRedstoneTorchesRequired() {return redstone_torches_required;}
     public ItemStack getUpgrade() {return upgrade;}
     public ItemStack getOutput() {return output;}
+    public List<TruthTableCategory> getCategories() {return categories;}
 
     public record TruthTableRecipeInput(
         ItemStack logic_plate,
@@ -89,6 +97,7 @@ public class TruthTableRecipe implements Recipe<TruthTableRecipe.TruthTableRecip
 
     public static class Serializer implements RecipeSerializer<TruthTableRecipe>{
         public static MapCodec<TruthTableRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                Identifier.CODEC.listOf().fieldOf("categories").forGetter(recipe -> recipe.categories.stream().map(TruthTableCategory::getId).toList()),
                 Codec.INT.fieldOf("logic_plate_requeired").forGetter(recipe -> recipe.logic_plate_required),
                 Codec.INT.fieldOf("redstone_required").forGetter(recipe -> recipe.redstone_required),
                 Codec.INT.fieldOf("redstone_torches_required").forGetter(recipe -> recipe.redstone_torches_required),
@@ -102,25 +111,27 @@ public class TruthTableRecipe implements Recipe<TruthTableRecipe.TruthTableRecip
         );
 
         private static TruthTableRecipe read(RegistryByteBuf buf) {
+            List<Identifier> categories = IDENTIFIER_LIST_PACKET_CODEC.decode(buf);
             Integer logic_plate_required = PacketCodecs.INTEGER.decode(buf);
             Integer redstone_required = PacketCodecs.INTEGER.decode(buf);
             Integer torch_input = PacketCodecs.INTEGER.decode(buf);
             ItemStack upgrade = ItemStack.OPTIONAL_PACKET_CODEC.decode(buf);
             ItemStack output = ItemStack.PACKET_CODEC.decode(buf);
 
-            return new TruthTableRecipe(logic_plate_required,redstone_required,torch_input, upgrade,output);
+            return new TruthTableRecipe(categories,logic_plate_required,redstone_required,torch_input, upgrade,output);
         }
 
         private static void write(RegistryByteBuf buf, TruthTableRecipe recipe){
+            IDENTIFIER_LIST_PACKET_CODEC.encode(buf, recipe.categories.stream().map(TruthTableCategory::getId).toList());
             PacketCodecs.INTEGER.encode(buf,recipe.logic_plate_required);
             PacketCodecs.INTEGER.encode(buf,recipe.redstone_required);
             PacketCodecs.INTEGER.encode(buf,recipe.redstone_torches_required);
             ItemStack.OPTIONAL_PACKET_CODEC.encode(buf, recipe.upgrade);
             ItemStack.PACKET_CODEC.encode(buf,recipe.output);
-
         }
 
         public MapCodec<TruthTableRecipe> codec() {return CODEC;}
         public PacketCodec<RegistryByteBuf, TruthTableRecipe> packetCodec() {return PACKET_CODEC;}
+        private static final PacketCodec<ByteBuf, List<Identifier>> IDENTIFIER_LIST_PACKET_CODEC = Identifier.PACKET_CODEC.collect(PacketCodecs.toList());
     }
 }

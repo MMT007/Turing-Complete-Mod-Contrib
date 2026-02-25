@@ -33,9 +33,10 @@ public class TuringComplete implements ModInitializer {
 		ScreenHandlerInit.load();
 		RecipeTypesInit.load();
 		RecipeSerializersInit.load();
-		PacketTypeInit.register();
-		NetworkReceiverInit.registerServer();
+		PacketTypeInit.load();
+		NetworkReceiverInit.loadServer();
 
+		LOGGER.info("Loading Complete!");
 	}
 
 	public static Identifier id(String path){
