@@ -4,9 +4,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import name.turingcomplete.TuringComplete;
 import name.turingcomplete.init.RecipeTypesInit;
 import name.turingcomplete.network.c2s.SelectTruthTableCraftC2SPacket;
-import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
-import name.turingcomplete.screen.truthtable.data.TruthTableCrafts;
-import name.turingcomplete.screen.truthtable.TruthTableScreenHandler;
+import name.turingcomplete.data.recipe.TruthTableCategory;
+import name.turingcomplete.data.recipe.TruthTableCrafts;
+import name.turingcomplete.screen.TruthTableScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -25,12 +25,13 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.GameRules;
 
 import java.awt.*;
 import java.util.List;
 import java.util.function.Supplier;
 
-import static name.turingcomplete.screen.truthtable.TruthTableScreenHandler.SLOT_POSITIONS;
+import static name.turingcomplete.screen.TruthTableScreenHandler.SLOT_POSITIONS;
 
 @Environment(EnvType.CLIENT)
 public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
@@ -101,7 +102,7 @@ public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
     private final CategoryTabWidget[] category_tabs = new CategoryTabWidget[MAX_CATEGORIES_ON_SCREEN];
     private final CategoryChangerButtonWidget[] category_change_buttons = new CategoryChangerButtonWidget[2];
 
-    private TruthTableCategory selectedCategory = TruthTableCategory.AND_GATES;
+    private TruthTableCategory selectedCategory = TruthTableCategory.GATES;
     private boolean scrolling;
     private int selectedIndex;
     int craftIndexOffset;
@@ -193,13 +194,14 @@ public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
         return listSize > MAX_CRAFTS_ON_SCREEN;
     }
 
-    // TODO: Get Player's Unlocked Recipes
-    private static TruthTableCrafts getCrafts(){
+    private static TruthTableCrafts getCrafts() {
         var client = MinecraftClient.getInstance();
-        if (client.getNetworkHandler() == null) return new TruthTableCrafts();
+        if (client.player == null || client.world == null)
+            return new TruthTableCrafts();
 
-        var manager = client.getNetworkHandler().getRecipeManager();
-        return TruthTableCrafts.fromRecipes(manager.listAllOfType(RecipeTypesInit.TRUTH_TABLE_RECIPE_TYPE));
+        var manager = client.world.getRecipeManager();
+        var allRecipes = manager.listAllOfType(RecipeTypesInit.TRUTH_TABLE_RECIPE_TYPE);
+        return TruthTableCrafts.fromRecipes(allRecipes);
     }
 
     // RENDER METHODS
@@ -291,7 +293,6 @@ public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
                 categoryTab.renderTooltip(context, mouseX, mouseY);
 
             categoryTab.updateState();
-            categoryTab.visible = categoryTab.index + this.categoryIndexOffset < CRAFTS.size();
         }
     }
 
@@ -493,12 +494,22 @@ public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
 
         public void updateState(){
             var category_index = this.index + categoryIndexOffset;
+
             if (category_index < 0 || category_index >= TruthTableCategory.values().length) {
                 this.toggled = false;
                 return;
             }
 
-            this.toggled = selectedCategory == TruthTableCategory.values()[category_index];
+            var category = TruthTableCategory.values()[category_index];
+            var category_list = CRAFTS.get(category);
+
+            if (!this.visible && !category_list.isEmpty())
+                this.visible = true;
+            else if (category_list.isEmpty())
+                this.visible = false;
+
+
+            this.toggled = selectedCategory == category;
         }
 
         @Override

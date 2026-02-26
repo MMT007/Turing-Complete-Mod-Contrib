@@ -1,4 +1,4 @@
-package name.turingcomplete.screen.truthtable.data;
+package name.turingcomplete.data.recipe;
 
 import name.turingcomplete.TuringComplete;
 import name.turingcomplete.init.BlockInit;
@@ -9,20 +9,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public enum TruthTableCategory {
-    AND_GATES(
-        TuringComplete.id("and_gates"),
-        Text.translatable("craftGroup.turingcomplete.and_gates"),
+    GATES(
+        TuringComplete.id("gates"),
+        Text.translatable("craftGroup.turingcomplete.gates"),
         new ItemStack(BlockInit.AND_GATE)
-    ),
-    OR_GATES(
-        TuringComplete.id("or_gates"),
-        Text.translatable("craftGroup.turingcomplete.or_gates"),
-        new ItemStack(BlockInit.OR_GATE)
-    ),
-    XOR_GATES(
-        TuringComplete.id("xor_gates"),
-        Text.translatable("craftGroup.turingcomplete.xor_gates"),
-        new ItemStack(BlockInit.XOR_GATE)
     ),
     NOT_GATES(
         TuringComplete.id("not_gates"),
@@ -34,10 +24,10 @@ public enum TruthTableCategory {
         Text.translatable("craftGroup.turingcomplete.lathes"),
         new ItemStack(BlockInit.SR_LATCH_BLOCK)
     ),
-    ADDERS(
-        TuringComplete.id("adders"),
-        Text.translatable("craftGroup.turingcomplete.adders"),
-        new ItemStack(BlockInit.FULL_ADDER)
+    ICS(
+        TuringComplete.id("ics"),
+        Text.translatable("craftGroup.turingcomplete.ics"),
+        new ItemStack(BlockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK)
     );
 
     private final Identifier id;

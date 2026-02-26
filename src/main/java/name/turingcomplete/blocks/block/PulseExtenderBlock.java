@@ -82,7 +82,7 @@ public class PulseExtenderBlock extends AbstractLogicBlock {
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
         if(getInputActive(world, pos, state, RelativeSide.BACK) != state.get(TIMER) > 0)
-            world.scheduleBlockTick(pos, this, 2);
+            world.scheduleBlockTick(pos, this, getUpdateDelay());
     }
 
     @Override

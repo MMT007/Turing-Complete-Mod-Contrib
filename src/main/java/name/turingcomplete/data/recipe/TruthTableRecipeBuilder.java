@@ -1,6 +1,5 @@
 package name.turingcomplete.data.recipe;
 
-import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.AdvancementRequirements;

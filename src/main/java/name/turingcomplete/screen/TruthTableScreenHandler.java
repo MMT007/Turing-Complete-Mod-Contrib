@@ -1,8 +1,9 @@
-package name.turingcomplete.screen.truthtable;
+package name.turingcomplete.screen;
 
 import name.turingcomplete.init.BlockInit;
+import name.turingcomplete.init.ItemTagsInit;
 import name.turingcomplete.init.ScreenHandlerInit;
-import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
+import name.turingcomplete.data.recipe.TruthTableCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -20,7 +21,7 @@ public class TruthTableScreenHandler extends ScreenHandler {
             stack -> stack.isOf(BlockInit.LOGIC_BASE_PLATE_BLOCK.asItem()),
             stack -> stack.isOf(Items.REDSTONE),
             stack -> stack.isOf(Items.REDSTONE_TORCH),
-            stack -> false
+            stack -> stack.isIn(ItemTagsInit.FITS_ON_UPGRADE_SLOT)
     );
     public static final List<Point> SLOT_POSITIONS = List.of(
             new Point(144, 30),  // slot 0 - top-left

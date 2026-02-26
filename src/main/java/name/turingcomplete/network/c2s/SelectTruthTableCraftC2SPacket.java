@@ -1,7 +1,7 @@
 package name.turingcomplete.network.c2s;
 
 import name.turingcomplete.TuringComplete;
-import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
+import name.turingcomplete.data.recipe.TruthTableCategory;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;

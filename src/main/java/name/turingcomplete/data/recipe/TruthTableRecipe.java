@@ -7,7 +7,6 @@ import io.netty.buffer.ByteBuf;
 import name.turingcomplete.init.BlockInit;
 import name.turingcomplete.init.RecipeSerializersInit;
 import name.turingcomplete.init.RecipeTypesInit;
-import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.RegistryByteBuf;
@@ -51,11 +50,21 @@ public class TruthTableRecipe implements Recipe<TruthTableRecipe.TruthTableRecip
     public RecipeSerializer<?> getSerializer() {
         return RecipeSerializersInit.TRUTH_TABLE_RECIPE_SERIALIZER;
     }
+    public String getOutputName(){return this.output.getName().getString();}
 
     public boolean fits(int width, int height) {return width >= 3 && height >= 2;}
     public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
         return output;
     }
+
+    public boolean matches(
+        World world,
+        ItemStack logic_plate,
+        ItemStack redstone,
+        ItemStack redstone_torch,
+        ItemStack upgrade
+    ) {return matches(new TruthTableRecipeInput(logic_plate, redstone, redstone_torch, upgrade), world);}
+
 
     @Override
     public boolean matches(TruthTableRecipeInput input, World world) {
@@ -69,12 +78,30 @@ public class TruthTableRecipe implements Recipe<TruthTableRecipe.TruthTableRecip
     @Override
     public ItemStack craft(TruthTableRecipeInput input, RegistryWrapper.WrapperLookup lookup) {return this.output.copy();}
 
-    public Integer getLogicPlateRequired() {return logic_plate_required;}
-    public Integer getRedstoneRequired() {return redstone_required;}
-    public Integer getRedstoneTorchesRequired() {return redstone_torches_required;}
+    public ItemStack getLogicPlate() {return new ItemStack(BlockInit.LOGIC_BASE_PLATE_BLOCK, logic_plate_required);}
+    public ItemStack getRedstone() {return new ItemStack(Items.REDSTONE, redstone_required);}
+    public ItemStack getRedstoneTorch() {return new ItemStack(Items.REDSTONE_TORCH, redstone_torches_required);}
     public ItemStack getUpgrade() {return upgrade;}
     public ItemStack getOutput() {return output;}
     public List<TruthTableCategory> getCategories() {return categories;}
+
+    public boolean depleteBuyItems(
+        World world,
+        ItemStack logic_plate,
+        ItemStack redstone,
+        ItemStack redstone_torch,
+        ItemStack upgrade
+    ) {
+        if (!this.matches(world,logic_plate, redstone, redstone_torch, upgrade))
+            return false;
+
+        logic_plate.decrement(this.logic_plate_required);
+        redstone.decrement(this.redstone_required);
+        redstone_torch.decrement(this.redstone_torches_required);
+        if (!this.upgrade.isEmpty()) upgrade.decrement(this.upgrade.getCount());
+
+        return true;
+    }
 
     public record TruthTableRecipeInput(
         ItemStack logic_plate,
@@ -96,7 +123,7 @@ public class TruthTableRecipe implements Recipe<TruthTableRecipe.TruthTableRecip
     }
 
     public static class Serializer implements RecipeSerializer<TruthTableRecipe>{
-        public static MapCodec<TruthTableRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+        public final static MapCodec<TruthTableRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 Identifier.CODEC.listOf().fieldOf("categories").forGetter(recipe -> recipe.categories.stream().map(TruthTableCategory::getId).toList()),
                 Codec.INT.fieldOf("logic_plate_requeired").forGetter(recipe -> recipe.logic_plate_required),
                 Codec.INT.fieldOf("redstone_required").forGetter(recipe -> recipe.redstone_required),

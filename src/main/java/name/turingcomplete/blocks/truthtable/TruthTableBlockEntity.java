@@ -1,7 +1,7 @@
 package name.turingcomplete.blocks.truthtable;
 
 import name.turingcomplete.init.BlockEntityInit;
-import name.turingcomplete.screen.truthtable.TruthTableScreenHandler;
+import name.turingcomplete.screen.TruthTableScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;

@@ -1,6 +1,6 @@
-package name.turingcomplete.screen.truthtable;
+package name.turingcomplete.screen;
 
-import name.turingcomplete.screen.truthtable.data.TruthTableCraft;
+import name.turingcomplete.data.recipe.TruthTableRecipe;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
@@ -35,12 +35,14 @@ public class TruthTableOutputSlot extends Slot {
     protected void onCrafted(ItemStack stack) {
         stack.onCraftByPlayer(this.player.getWorld(), this.player, this.amount);
         this.amount = 0;
+
+        this.inventory.unlockLastRecipe(this.player, this.inventory.getStacks());
     }
 
     public void onTakeItem(PlayerEntity player, ItemStack stack) {
         this.onCrafted(stack);
 
-        TruthTableCraft craft = this.inventory.getSelectedCraft();
+        TruthTableRecipe craft = this.inventory.getSelectedCraft();
 
         if (craft != null) {
             var logic_plates = this.inventory.getStack(0);
@@ -48,7 +50,7 @@ public class TruthTableOutputSlot extends Slot {
             var redstone_torches = this.inventory.getStack(2);
             var upgrades = this.inventory.getStack(3);
 
-            if (craft.depleteBuyItems(logic_plates, redstone_dusts, redstone_torches, upgrades)) {
+            if (craft.depleteBuyItems(player.getWorld(),logic_plates, redstone_dusts, redstone_torches, upgrades)) {
                 this.inventory.setStack(0, logic_plates);
                 this.inventory.setStack(1, redstone_dusts);
                 this.inventory.setStack(2, redstone_torches);

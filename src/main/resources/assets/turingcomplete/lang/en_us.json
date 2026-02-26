@@ -23,10 +23,8 @@
   "block.turingcomplete.t_latch_block" : "T Latch Block",
   "block.turingcomplete.truth_table_block" : "Truth Table",
   "itemGroup.turingcomplete.group" : "Turing Complete",
-  "craftGroup.turingcomplete.and_gates" : "AND Gates",
-  "craftGroup.turingcomplete.or_gates" : "OR Gates",
-  "craftGroup.turingcomplete.xor_gates" : "XOR Gates",
+  "craftGroup.turingcomplete.gates" : "Gates",
   "craftGroup.turingcomplete.not_gates" : "NOT Gates",
   "craftGroup.turingcomplete.lathes" : "Latches",
-  "craftGroup.turingcomplete.adders" : "Adders"
+  "craftGroup.turingcomplete.ics" : "Integrated Circuits"
 }

@@ -1,23 +1,28 @@
-package name.turingcomplete.screen.truthtable;
+package name.turingcomplete.screen;
 
+import name.turingcomplete.data.recipe.TruthTableRecipe;
 import name.turingcomplete.init.RecipeTypesInit;
-import name.turingcomplete.screen.truthtable.data.TruthTableCategory;
-import name.turingcomplete.screen.truthtable.data.TruthTableCraft;
-import name.turingcomplete.screen.truthtable.data.TruthTableCrafts;
+import name.turingcomplete.data.recipe.TruthTableCategory;
+import name.turingcomplete.data.recipe.TruthTableCrafts;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.RecipeUnlocker;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.collection.DefaultedList;
 import org.jetbrains.annotations.Nullable;
 
-public class TruthTableInventory implements Inventory {
+import java.util.List;
+
+public class TruthTableInventory implements Inventory, RecipeUnlocker {
     private final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(5,ItemStack.EMPTY);
     private final PlayerEntity player;
     public final TruthTableCrafts crafts;
+    private RecipeEntry<?> lastRecipe;
 
     private TruthTableCategory selectedCategory;
-    @Nullable private TruthTableCraft selectedCraft;
+    @Nullable private TruthTableRecipe selectedCraft;
     private int selectedCraftIndex;
 
     public TruthTableInventory(PlayerEntity player) {
@@ -32,6 +37,11 @@ public class TruthTableInventory implements Inventory {
     public ItemStack getStack(int slot) {
         return stacks.get(slot);
     }
+    public List<ItemStack> getStacks() {return this.stacks;}
+
+    public void setLastRecipe(@Nullable RecipeEntry<?> recipe) {this.lastRecipe = recipe;}
+
+    public @Nullable RecipeEntry<?> getLastRecipe() {return lastRecipe;}
 
     public void setSelectedCategory(TruthTableCategory category){
         this.selectedCategory = category;
@@ -41,7 +51,7 @@ public class TruthTableInventory implements Inventory {
         this.selectedCraftIndex = index;
     }
 
-    public @Nullable TruthTableCraft getSelectedCraft(){return this.selectedCraft;}
+    public @Nullable TruthTableRecipe getSelectedCraft(){return this.selectedCraft;}
 
     public boolean isEmpty(){return this.isEmpty(true);}
     public boolean isEmpty(boolean with_output) {
@@ -106,13 +116,14 @@ public class TruthTableInventory implements Inventory {
 
         if (!craftList.isEmpty()) {
             var craft = craftList.getValidCraft(
+                this.player.getWorld(),
                 logic_plate, redstone_dusts, redstone_torches, upgrades,
                 selectedCategory, selectedCraftIndex
             );
 
             if (craft != null) {
                 this.selectedCraft = craft;
-                this.setStack(4, craft.copySellItem());
+                this.setStack(4, craft.getOutput().copy());
 
             } else this.setStack(4, ItemStack.EMPTY);
 
@@ -123,7 +134,6 @@ public class TruthTableInventory implements Inventory {
 
     public boolean canPlayerUse(PlayerEntity player) {return true;}
 
-    // TODO: Get Player's Unlocked Recipes
     private TruthTableCrafts getRecipes(){
         if (player instanceof ServerPlayerEntity serverPlayer){
             if (serverPlayer.getServer() == null) return new TruthTableCrafts();
@@ -134,5 +144,4 @@ public class TruthTableInventory implements Inventory {
 
         return new TruthTableCrafts();
     }
-
 }
