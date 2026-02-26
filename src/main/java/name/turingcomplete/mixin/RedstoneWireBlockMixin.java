@@ -1,4 +1,4 @@
-package name.turingcomplete.client.mixin;
+package name.turingcomplete.mixin;
 
 import name.turingcomplete.blocks.ConnectsToRedstone;
 import name.turingcomplete.init.BlockInit;
