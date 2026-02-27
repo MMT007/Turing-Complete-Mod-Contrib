@@ -4,7 +4,7 @@ import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 import com.mojang.serialization.MapCodec;
 
-import name.turingcomplete.init.propertyInit;
+import name.turingcomplete.init.PropertyInit;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -25,7 +25,7 @@ import net.minecraft.world.WorldView;
 
 //anything on a logic plate
 public abstract class AbstractLogicBlock extends HorizontalFacingBlock implements ConnectsToRedstone{
-    public static final BooleanProperty MIRRORED = propertyInit.SWAPPED_DIR;
+    public static final BooleanProperty MIRRORED = PropertyInit.SWAPPED_DIR;
 
     protected AbstractLogicBlock(Settings settings) {
         super(settings);
@@ -153,7 +153,7 @@ public abstract class AbstractLogicBlock extends HorizontalFacingBlock implement
     @Override
     @MustBeInvokedByOverriders
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (!canPlaceAt(state,world, pos)) {
+        if (!state.canPlaceAt(world, pos)) {
             world.breakBlock(pos, true);
 
             for (Direction direction : DIRECTIONS)
@@ -216,18 +216,12 @@ public abstract class AbstractLogicBlock extends HorizontalFacingBlock implement
         }
 
         public RelativeSide getOpposite(){
-            switch(this) {
-                case BACK:
-                    return FRONT;
-                case FRONT:
-                    return BACK;
-                case LEFT:
-                    return RIGHT;
-                case RIGHT:
-                    return LEFT;
-                default:
-                    throw new IllegalStateException("Relative side not Front, Back, Left, or Right");
-            }
+            return switch (this) {
+                case BACK -> FRONT;
+                case FRONT -> BACK;
+                case LEFT -> RIGHT;
+                case RIGHT -> LEFT;
+            };
         }
     }
 }

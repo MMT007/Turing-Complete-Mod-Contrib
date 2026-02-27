@@ -70,7 +70,7 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
         BlockState mainState = world.getBlockState(mainPos);
 
         if(!isMultiblockValid(world, mainPos, mainState)){
-            TuringComplete.LOGGER.warn("invalid multiblock at "+mainPos+"in AbstractLogicMultiblock onUse");
+            TuringComplete.LOGGER.warn("invalid multiblock at "+mainPos+" in AbstractLogicMultiblock onUse");
             return ActionResult.PASS;
         }
 
@@ -92,7 +92,7 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
         mainState = mainState.with(MIRRORED, !wasMirrored);
         world.setBlockState(mainPos, mainState,Block.NOTIFY_ALL);
         if (!isMultiblockValid(world, mainPos, mainState)) {
-            TuringComplete.LOGGER.warn("Invalid multiblock at "+mainPos+"in AbstractLogicMultiblock onUse after mirror");
+            TuringComplete.LOGGER.warn("Invalid multiblock at "+mainPos+" in AbstractLogicMultiblock onUse after mirror");
         }
         else {
             //update inputs, because they have moved
@@ -116,7 +116,7 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
 
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (!canPlaceAt(state,world, pos)) {
+        if (!state.canPlaceAt(world, pos)) {
             BlockPos mainPos = getMainPos(world, state, pos);
             //invalid multiblock
             if (mainPos == null) {

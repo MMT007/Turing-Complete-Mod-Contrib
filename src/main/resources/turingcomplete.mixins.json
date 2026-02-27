@@ -3,7 +3,6 @@
   "package": "name.turingcomplete.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ExampleMixin",
     "RedstoneWireBlockMixin"
   ],
   "injectors": {

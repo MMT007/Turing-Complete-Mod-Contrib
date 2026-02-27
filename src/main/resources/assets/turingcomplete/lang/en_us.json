@@ -17,9 +17,14 @@
   "block.turingcomplete.full_adder" : "Full Adder",
   "block.turingcomplete.bi_directional_redstone_bridge_block" : "2-Way Redstone Bridge",
   "block.turingcomplete.omni_directional_redstone_bridge_block" : "4-Way Redstone Bridge",
+  "block.turingcomplete.pulse_extender_block" : "Pulse Extender",
   "block.turingcomplete.sr_latch_block" : "SR Latch Block",
   "block.turingcomplete.jk_latch_block" : "JK Latch Block",
   "block.turingcomplete.t_latch_block" : "T Latch Block",
   "block.turingcomplete.truth_table_block" : "Truth Table",
-  "itemGroup.turingcomplete.group" : "Turing Complete"
+  "itemGroup.turingcomplete.group" : "Turing Complete",
+  "craftGroup.turingcomplete.gates" : "Gates",
+  "craftGroup.turingcomplete.not_gates" : "NOT Gates",
+  "craftGroup.turingcomplete.lathes" : "Latches",
+  "craftGroup.turingcomplete.ics" : "Integrated Circuits"
 }

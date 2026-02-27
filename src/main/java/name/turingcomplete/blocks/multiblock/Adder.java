@@ -2,6 +2,8 @@ package name.turingcomplete.blocks.multiblock;
 
 import java.util.List;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,7 +68,7 @@ public final class Adder extends AbstractLogicMultiblock{
     @Override
     protected BlockPos mirrorBlockParts(World world, BlockPos mainPos, BlockState mainState){
         if(!isMultiblockValid(world, mainPos, mainState)) {
-            TuringComplete.LOGGER.warn("invalid multiblock at "+mainPos+"in Adder mirrorBlockParts");
+            TuringComplete.LOGGER.warn("invalid multiblock at "+mainPos+" in Adder mirrorBlockParts");
             return mainPos;
         }
         Direction facing = mainState.get(FACING);
@@ -218,14 +220,14 @@ public final class Adder extends AbstractLogicMultiblock{
     protected void onInputChange(World world, BlockPos pos, BlockState state){
         BlockPos mainPos = getMainPos(world, state, pos);
         if (mainPos == null) {
-            TuringComplete.LOGGER.debug("invalid multiblock at "+mainPos+"in Adder onInputChange (cannot find main block). May be caused by spurious neighbor updates when mirroring");
+            TuringComplete.LOGGER.debug("invalid multiblock at "+mainPos+" in Adder onInputChange (cannot find main block). May be caused by spurious neighbor updates when mirroring");
             return;
         }
 
         BlockState mainState = world.getBlockState(mainPos);
 
         if (!(mainState.getBlock() instanceof Adder) || !isMultiblockValid(world, mainPos, mainState)) {
-            TuringComplete.LOGGER.debug("invalid multiblock at "+mainPos+"in Adder onInputChange. May be caused by spurious neighbor updates when mirroring");
+            TuringComplete.LOGGER.debug("invalid multiblock at "+mainPos+" in Adder onInputChange. May be caused by spurious neighbor updates when mirroring");
             return;
         }
 
@@ -257,7 +259,7 @@ public final class Adder extends AbstractLogicMultiblock{
         world.setBlockState(pos, state,Block.NOTIFY_LISTENERS);
 
         if(!isMultiblockValid(world,mainPos,mainState)) {
-            TuringComplete.LOGGER.error("Adder multiblock invalid at "+mainPos+"after changing input state");
+            TuringComplete.LOGGER.error("Adder multiblock invalid at "+mainPos+" after changing input state");
             return;
         }
 
@@ -311,13 +313,13 @@ public final class Adder extends AbstractLogicMultiblock{
     }
 
     @Override
-    protected final int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction)
+    protected int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction)
     {
         return getWeakRedstonePower(state, world, pos, direction);
     }
 
     @Override
-    protected final int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction)
+    protected int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction)
     {
         Direction facing = state.get(FACING);
         boolean mirrored = state.get(MIRRORED);
@@ -349,9 +351,14 @@ public final class Adder extends AbstractLogicMultiblock{
         BlockState bState = getBPlacementState(facing);
 
         if (
-            !canPlaceAt(mainState, world, mainPos) ||
-            !canPlaceAt(bState, world, bPos) ||
-            !canPlaceAt(aState, world, aPos)
+            !mainState.canPlaceAt(world, mainPos) ||
+            !bState.canPlaceAt(world, bPos) ||
+            !aState.canPlaceAt(world, aPos) ||
+
+            //canPlaceAt assumes position is not occupied, but that is only know true for mainPos
+            // ~tgiddings (Dipole)
+            world.getBlockState(aPos).getBlock() != Blocks.AIR ||
+            world.getBlockState(bPos).getBlock() != Blocks.AIR
         ) {
             return null;
         }
@@ -376,9 +383,7 @@ public final class Adder extends AbstractLogicMultiblock{
         boolean isBActive = getBActive(world, gatePos, gateState);
         boolean isCarryInActive = getCarryInActive(world, gatePos, gateState);
 
-        boolean result = isAActive ^ isBActive ^ isCarryInActive;
-
-        return result;
+        return isAActive ^ isBActive ^ isCarryInActive;
     }
     
     private boolean evaluateCarryOut(World world, BlockPos gatePos, BlockState gateState){
@@ -386,8 +391,7 @@ public final class Adder extends AbstractLogicMultiblock{
         boolean isBActive = getBActive(world, gatePos, gateState);
         boolean isCarryInActive = getCarryInActive(world, gatePos, gateState);
 
-        boolean result = isAActive && isBActive || (isCarryInActive && (isAActive || isBActive));
-        return result;
+        return isAActive && isBActive || (isCarryInActive && (isAActive || isBActive));
     }
 
     private boolean getCarryInActive(World world, BlockPos gatePos, BlockState gateState){
@@ -411,7 +415,7 @@ public final class Adder extends AbstractLogicMultiblock{
         return getInputActive(world, partPos, world.getBlockState(partPos),RelativeSide.BACK);
     }
 
-    private BlockPos getAPos(World world, BlockPos mainPos, BlockState mainState){
+    private BlockPos getAPos(WorldView world, BlockPos mainPos, BlockState mainState){
         boolean mirrored = mainState.get(MIRRORED);
         if(mirrored) {
             return mainPos.offset(mainState.get(FACING).rotateYCounterclockwise());
@@ -421,7 +425,7 @@ public final class Adder extends AbstractLogicMultiblock{
         }
     }
 
-    private BlockPos getBPos(World world, BlockPos mainPos, BlockState mainState){
+    private BlockPos getBPos(WorldView world, BlockPos mainPos, BlockState mainState){
         boolean mirrored = mainState.get(MIRRORED);
         if(mirrored) {
             return mainPos.offset(mainState.get(FACING).rotateYClockwise());
@@ -431,13 +435,13 @@ public final class Adder extends AbstractLogicMultiblock{
         }
     }
     
-    private final void updateSumBlock(World world, BlockPos mainPos, BlockState mainState){
+    private void updateSumBlock(World world, BlockPos mainPos, BlockState mainState){
         Direction facing = mainState.get(FACING);
 
         updateOutputBlock(world, mainPos, facing.getOpposite());
     }
 
-    private final void updateCarryOutBlock(World world, BlockPos mainPos, BlockState mainState){
+    private void updateCarryOutBlock(World world, BlockPos mainPos, BlockState mainState){
         Direction facing = mainState.get(FACING);
         boolean mirrored = mainState.get(MIRRORED);
         RelativeSide outputSide = mirrored ? RelativeSide.LEFT : RelativeSide.RIGHT;
@@ -446,7 +450,7 @@ public final class Adder extends AbstractLogicMultiblock{
         updateOutputBlock(world, bPos, outputSide.withBackDirection(facing));
     }
 
-    private final void updateOldCarryOutBlockNeighbors(World world, BlockPos mainPos, BlockState mainState){
+    private void updateOldCarryOutBlockNeighbors(World world, BlockPos mainPos, BlockState mainState){
         Direction facing = mainState.get(FACING);
         boolean mirrored = mainState.get(MIRRORED);
         RelativeSide outputSide = mirrored ? RelativeSide.RIGHT : RelativeSide.LEFT;

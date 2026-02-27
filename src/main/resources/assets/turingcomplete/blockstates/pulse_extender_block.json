@@ -1,0 +1,353 @@
+{
+  "render_type": "cutout",
+  "multipart": [
+
+    {
+      "when": {"delay": "1","facing": "north"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay0","y": 180}
+    },
+    {
+      "when": {"delay": "2","facing": "north"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay1","y": 180}
+    },
+    {
+      "when": {"delay": "3","facing": "north"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay2","y": 180}
+    },
+    {
+      "when": {"delay": "4","facing": "north"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay3","y": 180}
+    },
+    {
+      "when": {"delay": "5","facing": "north"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay4","y": 180}
+    },
+    {
+      "when": {"delay": "6","facing": "north"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay5","y": 180}
+    },
+    {
+      "when": {"delay": "7","facing": "north"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay6","y": 180}
+    },
+    {
+      "when": {"delay": "8","facing": "north"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay7","y": 180}
+    },
+    {
+      "when": {"delay": "1","facing": "south"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay0","y": 0}
+    },
+    {
+      "when": {"delay": "2","facing": "south"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay1","y": 0}
+    },
+    {
+      "when": {"delay": "3","facing": "south"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay2","y": 0}
+    },
+    {
+      "when": {"delay": "4","facing": "south"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay3","y": 0}
+    },
+    {
+      "when": {"delay": "5","facing": "south"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay4","y": 0}
+    },
+    {
+      "when": {"delay": "6","facing": "south"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay5","y": 0}
+    },
+    {
+      "when": {"delay": "7","facing": "south"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay6","y": 0}
+    },
+    {
+      "when": {"delay": "8","facing": "south"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay7","y": 0}
+    },
+    {
+      "when": {"delay": "1","facing": "east"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay0","y": 270}
+    },
+    {
+      "when": {"delay": "2","facing": "east"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay1","y": 270}
+    },
+    {
+      "when": {"delay": "3","facing": "east"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay2","y": 270}
+    },
+    {
+      "when": {"delay": "4","facing": "east"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay3","y": 270}
+    },
+    {
+      "when": {"delay": "5","facing": "east"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay4","y": 270}
+    },
+    {
+      "when": {"delay": "6","facing": "east"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay5","y": 270}
+    },
+    {
+      "when": {"delay": "7","facing": "east"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay6","y": 270}
+    },
+    {
+      "when": {"delay": "8","facing": "east"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay7","y": 270}
+    },
+    {
+      "when": {"delay": "1","facing": "west"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay0","y": 90}
+    },
+    {
+      "when": {"delay": "2","facing": "west"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay1","y": 90}
+    },
+    {
+      "when": {"delay": "3","facing": "west"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay2","y": 90}
+    },
+    {
+      "when": {"delay": "4","facing": "west"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay3","y": 90}
+    },
+    {
+      "when": {"delay": "5","facing": "west"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay4","y": 90}
+    },
+    {
+      "when": {"delay": "6","facing": "west"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay5","y": 90}
+    },
+    {
+      "when": {"delay": "7","facing": "west"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay6","y": 90}
+    },
+    {
+      "when": {"delay": "8","facing": "west"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_delay7","y": 90}
+    },
+
+
+
+
+
+
+
+    {
+      "when": {"timer": "0","facing": "north"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer0","y": 180}
+    },
+    {
+      "when": {"timer": "1","facing": "north"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer1","y": 180}
+    },
+    {
+      "when": {"timer": "2","facing": "north"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer2","y": 180}
+    },
+    {
+      "when": {"timer": "3","facing": "north"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer3","y": 180}
+    },
+    {
+      "when": {"timer": "4","facing": "north"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer4","y": 180}
+    },
+    {
+      "when": {"timer": "5","facing": "north"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer5","y": 180}
+    },
+    {
+      "when": {"timer": "6","facing": "north"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer6","y": 180}
+    },
+    {
+      "when": {"timer": "7","facing": "north"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer7","y": 180}
+    },
+    {
+      "when": {"timer": "8","facing": "north"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer8","y": 180}
+    },
+    {
+      "when": {"timer": "0","facing": "south"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer0","y": 0}
+    },
+    {
+      "when": {"timer": "1","facing": "south"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer1","y": 0}
+    },
+    {
+      "when": {"timer": "2","facing": "south"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer2","y": 0}
+    },
+    {
+      "when": {"timer": "3","facing": "south"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer3","y": 0}
+    },
+    {
+      "when": {"timer": "4","facing": "south"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer4","y": 0}
+    },
+    {
+      "when": {"timer": "5","facing": "south"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer5","y": 0}
+    },
+    {
+      "when": {"timer": "6","facing": "south"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer6","y": 0}
+    },
+    {
+      "when": {"timer": "7","facing": "south"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer7","y": 0}
+    },
+    {
+      "when": {"timer": "8","facing": "south"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer8","y": 0}
+    },
+    {
+      "when": {"timer": "0","facing": "east"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer0","y": 270}
+    },
+    {
+      "when": {"timer": "1","facing": "east"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer1","y": 270}
+    },
+    {
+      "when": {"timer": "2","facing": "east"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer2","y": 270}
+    },
+    {
+      "when": {"timer": "3","facing": "east"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer3","y": 270}
+    },
+    {
+      "when": {"timer": "4","facing": "east"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer4","y": 270}
+    },
+    {
+      "when": {"timer": "5","facing": "east"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer5","y": 270}
+    },
+    {
+      "when": {"timer": "6","facing": "east"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer6","y": 270}
+    },
+    {
+      "when": {"timer": "7","facing": "east"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer7","y": 270}
+    },
+    {
+      "when": {"timer": "8","facing": "east"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer8","y": 270}
+    },
+    {
+      "when": {"timer": "0","facing": "west"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer0","y": 90}
+    },
+    {
+      "when": {"timer": "1","facing": "west"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer1","y": 90}
+    },
+    {
+      "when": {"timer": "2","facing": "west"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer2","y": 90}
+    },
+    {
+      "when": {"timer": "3","facing": "west"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer3","y": 90}
+    },
+    {
+      "when": {"timer": "4","facing": "west"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer4","y": 90}
+    },
+    {
+      "when": {"timer": "5","facing": "west"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer5","y": 90}
+    },
+    {
+      "when": {"timer": "6","facing": "west"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer6","y": 90}
+    },
+    {
+      "when": {"timer": "7","facing": "west"},
+      "apply":
+        {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer7","y": 90}
+    },
+    {
+      "when": {"timer": "8","facing": "west"},
+      "apply":
+      {"model": "turingcomplete:block/pulse_extender/pulse_extender_timer8","y": 90}
+    }
+  ]
+}

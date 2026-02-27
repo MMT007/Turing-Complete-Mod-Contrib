@@ -1,0 +1,25 @@
+package name.turingcomplete.client.color;
+
+import name.turingcomplete.blocks.block.OmniDirectionalRedstoneBridgeBlock;
+import name.turingcomplete.init.BlockInit;
+import name.turingcomplete.init.PropertyInit;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.minecraft.block.*;
+import net.minecraft.client.color.block.BlockColorProvider;
+
+@Environment(EnvType.CLIENT)
+public class BlockTint {
+    private static final int NO_COLOR = -1;
+
+    public BlockTint() {}
+
+    public static void create() {
+        ColorProviderRegistry<Block, BlockColorProvider> registerer = ColorProviderRegistry.BLOCK;
+        registerer.register((state, world, pos, tintIndex) ->
+                OmniDirectionalRedstoneBridgeBlock.getWireColor(state,tintIndex == 0 ? PropertyInit.POWER_X : PropertyInit.POWER_Z),
+                BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK
+        );
+    }
+}

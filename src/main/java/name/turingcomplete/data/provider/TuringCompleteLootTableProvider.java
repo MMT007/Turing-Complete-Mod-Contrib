@@ -1,7 +1,7 @@
 package name.turingcomplete.data.provider;
 
 import name.turingcomplete.blocks.multiblock.Adder;
-import name.turingcomplete.init.blockInit;
+import name.turingcomplete.init.BlockInit;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
@@ -26,29 +26,31 @@ public class TuringCompleteLootTableProvider extends FabricBlockLootTableProvide
 
     @Override
     public void generate() {
-        addDrop(blockInit.LOGIC_BASE_PLATE_BLOCK, drops(blockInit.LOGIC_BASE_PLATE_BLOCK));
+        addDrop(BlockInit.LOGIC_BASE_PLATE_BLOCK, drops(BlockInit.LOGIC_BASE_PLATE_BLOCK));
 
-        addDrop(blockInit.NAND_GATE, drops(blockInit.NAND_GATE));
-        addDrop(blockInit.AND_GATE, drops(blockInit.AND_GATE));
-        addDrop(blockInit.NOR_GATE, drops(blockInit.NOR_GATE));
-        addDrop(blockInit.NOT_GATE, drops(blockInit.NOT_GATE));
-        addDrop(blockInit.OR_GATE, drops(blockInit.OR_GATE));
-        addDrop(blockInit.THREE_AND_GATE, drops(blockInit.THREE_AND_GATE));
-        addDrop(blockInit.THREE_OR_GATE, drops(blockInit.THREE_OR_GATE));
-        addDrop(blockInit.XNOR_GATE, drops(blockInit.XNOR_GATE));
-        addDrop(blockInit.XOR_GATE, drops(blockInit.XOR_GATE));
+        addDrop(BlockInit.NAND_GATE, drops(BlockInit.NAND_GATE));
+        addDrop(BlockInit.AND_GATE, drops(BlockInit.AND_GATE));
+        addDrop(BlockInit.NOR_GATE, drops(BlockInit.NOR_GATE));
+        addDrop(BlockInit.NOT_GATE, drops(BlockInit.NOT_GATE));
+        addDrop(BlockInit.OR_GATE, drops(BlockInit.OR_GATE));
+        addDrop(BlockInit.THREE_AND_GATE, drops(BlockInit.THREE_AND_GATE));
+        addDrop(BlockInit.THREE_OR_GATE, drops(BlockInit.THREE_OR_GATE));
+        addDrop(BlockInit.XNOR_GATE, drops(BlockInit.XNOR_GATE));
+        addDrop(BlockInit.XOR_GATE, drops(BlockInit.XOR_GATE));
 
-        addDrop(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, drops(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK));
-        addDrop(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, drops(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK));
+        addDrop(BlockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, drops(BlockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK));
+        addDrop(BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, drops(BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK));
 
-        addDrop(blockInit.SWITCH_GATE, drops(blockInit.SWITCH_GATE));
-        addDrop(blockInit.SR_LATCH_BLOCK, drops(blockInit.SR_LATCH_BLOCK));
-        addDrop(blockInit.JK_LATCH_BLOCK, drops(blockInit.JK_LATCH_BLOCK));
-        addDrop(blockInit.T_LATCH_BLOCK, drops(blockInit.T_LATCH_BLOCK));
-        addDrop(blockInit.MEMORY_CELL, drops(blockInit.MEMORY_CELL));
+        addDrop(BlockInit.PULSE_EXTENDER_BLOCK, drops(BlockInit.PULSE_EXTENDER_BLOCK));
 
-        addDrop(blockInit.HALF_ADDER, drop_if_property(blockInit.HALF_ADDER,Adder.PART,Adder.AdderPart.MIDDLE));
-        addDrop(blockInit.FULL_ADDER, drop_if_property(blockInit.FULL_ADDER,Adder.PART,Adder.AdderPart.MIDDLE));
+        addDrop(BlockInit.SWITCH_GATE, drops(BlockInit.SWITCH_GATE));
+        addDrop(BlockInit.SR_LATCH_BLOCK, drops(BlockInit.SR_LATCH_BLOCK));
+        addDrop(BlockInit.JK_LATCH_BLOCK, drops(BlockInit.JK_LATCH_BLOCK));
+        addDrop(BlockInit.T_LATCH_BLOCK, drops(BlockInit.T_LATCH_BLOCK));
+        addDrop(BlockInit.MEMORY_CELL, drops(BlockInit.MEMORY_CELL));
+
+        addDrop(BlockInit.HALF_ADDER, drop_if_property(BlockInit.HALF_ADDER,Adder.PART,Adder.AdderPart.MIDDLE));
+        addDrop(BlockInit.FULL_ADDER, drop_if_property(BlockInit.FULL_ADDER,Adder.PART,Adder.AdderPart.MIDDLE));
     }
 
     private <T extends Comparable<T> & StringIdentifiable> LootTable.Builder drop_if_property(Block block, Property<T> property, T value ){

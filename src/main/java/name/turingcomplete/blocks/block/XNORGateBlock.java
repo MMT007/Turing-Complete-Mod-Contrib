@@ -16,6 +16,6 @@ public class XNORGateBlock extends AbstractSimpleGate {
     protected boolean evaluateGate(World world, BlockPos gatePos, BlockState gateState) {
         boolean left = getInputActive(world, gatePos, gateState,RelativeSide.LEFT);
         boolean right = getInputActive(world, gatePos, gateState,RelativeSide.RIGHT);
-        return ! (left ^ right);
+        return left == right;
     }
 }
