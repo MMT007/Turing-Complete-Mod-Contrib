@@ -1,6 +1,7 @@
 package name.turingcomplete.blocks.block;
 
 import name.turingcomplete.blocks.AbstractLogicBlock;
+import name.turingcomplete.blocks.RedstonePowerState;
 import name.turingcomplete.init.PropertyInit;
 import net.minecraft.block.*;
 import net.minecraft.item.ItemPlacementContext;
@@ -20,8 +21,6 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     private static final IntProperty POWER_X;
 
     private static final Vec3d[] COLORS;
-
-    private boolean wiresGivePower = true;
 
     public OmniDirectionalRedstoneBridgeBlock(Settings settings) {
         super(settings);
@@ -146,7 +145,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
     @Override
     protected boolean emitsRedstonePower(BlockState state) {
-        return this.wiresGivePower;
+        return RedstonePowerState.givesPower();
     }
     @Override
     protected boolean isDirectional() {return false;}
@@ -156,9 +155,9 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     // returns the power received on a certain axis
     private int getReceivedPowerOnAxis(World world, BlockPos pos, Direction.Axis axis){
         // Get Received Power By This Block Position
-        this.wiresGivePower = false;
+        RedstonePowerState.unsetPower();
         int received = this.getReceivedRedstonePower(world,pos,axis);
-        this.wiresGivePower = true;
+        RedstonePowerState.setPower();
 
         int nearby_power = 0;
 
@@ -258,13 +257,13 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
     @Override
     protected int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
-        return this.wiresGivePower ? state.getWeakRedstonePower(world, pos, direction) : 0;
+        return RedstonePowerState.givesPower() ? state.getWeakRedstonePower(world, pos, direction) : 0;
     }
 
     @Override
     protected int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
         // If The Block Doesn't Give Power, Return 0
-        if (!this.wiresGivePower) return 0;
+        if (!RedstonePowerState.givesPower()) return 0;
 
         BlockState block_to_power = world.getBlockState(pos.offset(direction.getOpposite()));
 

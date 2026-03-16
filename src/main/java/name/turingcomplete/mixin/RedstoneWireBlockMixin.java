@@ -1,13 +1,11 @@
 package name.turingcomplete.mixin;
 
 import name.turingcomplete.blocks.ConnectsToRedstone;
-import name.turingcomplete.init.BlockInit;
+import name.turingcomplete.blocks.RedstonePowerState;
 import net.minecraft.block.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -38,54 +36,30 @@ public class RedstoneWireBlockMixin {
         e.cancel();
     }
 
-    // Copy of RedstoneView::getReceivedRedstonePower
-    // Used To EXCLUDE The 4 Way Bridge From The Strong Power Sources
-    @Redirect(method = "getReceivedRedstonePower", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getReceivedRedstonePower(Lnet/minecraft/util/math/BlockPos;)I"))
-    private int getStrongestRedstonePower(World world, BlockPos pos) {
-        int i = 0;
+    @Redirect(
+        method = "getReceivedRedstonePower",
+        at = @At(
+            value = "FIELD",
+            target = "Lnet/minecraft/block/RedstoneWireBlock;wiresGivePower:Z",
+            opcode = Opcodes.PUTFIELD
+        )
+    )
+    private void redirectPowerSets(RedstoneWireBlock instance, boolean value)
+    {RedstonePowerState.power(value);}
 
-        for(Direction direction : Direction.values()) {
-            int j = getEmittedStrongPower(world,pos.offset(direction), direction);
-
-            if (j >= 15) return 15;
-            if (j > i) i = j;
-        }
-
-        return i;
-    }
-
-    //============== UNIQUE METHODS ======================
-
-
-    @Unique
-    private static int getEmittedStrongPower(World world, BlockPos pos, Direction direction){
-        // get source block
-        BlockState source = world.getBlockState(pos);
-
-        // if the block is solid, check surrounding blocks for strong powering
-        if (source.isSolidBlock(world,pos)){
-            int power = 0;
-            for(Direction sourceNeighbourDirection : Direction.values()){
-                BlockPos sourceNeighbourPosition = pos.offset(sourceNeighbourDirection);
-                BlockState sourceNeighbour = world.getBlockState(sourceNeighbourPosition);
-
-                // if block is a redstone wire, ignore it
-                if(sourceNeighbour.isOf(BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK)) continue;
-
-                // else check if the received power is bigger than the current biggest
-                int neighbourPower = sourceNeighbour.getStrongRedstonePower(world,sourceNeighbourPosition,sourceNeighbourDirection);
-                if(neighbourPower > power) power = neighbourPower;
-            }
-
-            // return biggest power from nearby source
-            return power;
-
-        } // else:
-
-        // if blocks is a redstone wire, return it's power with a falloff
-        if (source.isOf(BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK)) return source.getWeakRedstonePower(world,pos,direction) -1;
-
-        // else get weak power emitted from the block
-        return source.getWeakRedstonePower(world,pos,direction);
+    @Redirect(
+        method = {
+            "emitsRedstonePower",
+            "getStrongRedstonePower",
+            "getWeakRedstonePower"
+        },
+        at = @At(
+            value = "FIELD",
+            target = "Lnet/minecraft/block/RedstoneWireBlock;wiresGivePower:Z",
+            opcode = Opcodes.GETFIELD
+        )
+    )
+    private boolean redirectPowerGets(RedstoneWireBlock instance){
+        return RedstonePowerState.givesPower();
     }
 }
