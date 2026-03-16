@@ -20,6 +20,7 @@ public class TuringCompleteClient implements ClientModInitializer {
 		);
 
 		BlockRenderLayerMap.INSTANCE.putBlock(BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK,RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlock(BlockInit.REDSTONE_PIPE,RenderLayer.getTranslucent());
 
 		BlockTint.create();
 

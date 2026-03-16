@@ -1,6 +1,7 @@
 package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
+import name.turingcomplete.blocks.redstonepipe.RedstonePipeBlock;
 import name.turingcomplete.blocks.truthtable.TruthTableBlock;
 import name.turingcomplete.blocks.block.*;
 import name.turingcomplete.blocks.multiblock.Adder;
@@ -19,7 +20,6 @@ public class BlockInit {
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
-
 
     public static final NOTGateBlock NOT_GATE = registerWithItem("not_gate_block",
             new NOTGateBlock(AbstractBlock.Settings.create()
@@ -156,11 +156,18 @@ public class BlockInit {
 
     public static final TruthTableBlock TRUTH_TABLE = registerWithItem("truth_table_block",
             new TruthTableBlock(Block.Settings.create()
-                    .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
-                    .pistonBehavior(PistonBehavior.DESTROY)
-            ));
+            )
+    );
 
+    //===============================================================================================
+
+    public static final RedstonePipeBlock REDSTONE_PIPE = registerWithItem("redstone_pipe",
+        new RedstonePipeBlock(AbstractBlock.Settings.create()
+            .sounds(BlockSoundGroup.STONE)
+            .breakInstantly()
+        )
+    );
 
     public static <T extends Block> T register(String name, T block){
         return Registry.register(Registries.BLOCK, TuringComplete.id(name), block);

@@ -1,0 +1,37 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"particle": "turingcomplete:block/redstone_pipe",
+		"texture": "turingcomplete:block/redstone_pipe",
+		"inner": "turingcomplete:block/redstone_pipe_inside"
+	},
+	"elements": [
+		{
+			"from": [5, 5, 5],
+			"to": [11, 11, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 5, 7]},
+			"faces": {
+				"north": {"uv": [5, 0, 8, 3], "texture": "#texture"},
+				"east": {"uv": [5, 3, 8, 6], "texture": "#texture"},
+				"south": {"uv": [5, 6, 8, 9], "texture": "#texture"},
+				"west": {"uv": [8, 0, 11, 3], "texture": "#texture"},
+				"up": {"uv": [11, 6, 8, 3], "texture": "#texture"},
+				"down": {"uv": [11, 6, 8, 9], "texture": "#texture"}
+			}
+		},
+		{
+			"from": [5, 5, 5],
+			"to": [11, 11, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 5, 7]},
+			"faces": {
+				"north": {"uv": [0, 0, 3, 3], "texture": "#inner", "tintindex": 0},
+				"east": {"uv": [3, 0, 6, 3], "texture": "#inner", "tintindex": 0},
+				"south": {"uv": [0, 6, 3, 9], "texture": "#inner", "tintindex": 0},
+				"west": {"uv": [3, 6, 6, 9], "texture": "#inner", "tintindex": 0},
+				"up": {"uv": [0, 3, 3, 6], "texture": "#inner", "tintindex": 0},
+				"down": {"uv": [3, 3, 6, 6], "texture": "#inner", "tintindex": 0}
+			}
+		}
+	]
+}
